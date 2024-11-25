@@ -1,0 +1,42 @@
+{
+  "title": "elon musk",
+  "timestamp": "2024-11-25T17-29-34-722Z",
+  "script": "[Scene 1: A bustling Tesla factory with workers assembling electric cars. The camera pans across the assembly line, focusing on the precision and speed of the process.]\n\nNarrator: \"In the world of innovation and technology, few names stand out like Elon Musk. From revolutionizing the auto industry with Tesla, he has paved the way for a sustainable future.\"\n\n[Scene 2: A SpaceX rocket launch site, with a rocket lifting off into the sky. The camera follows the rocket as it ascends, leaving a trail of smoke behind.]\n\nNarrator: \"Musk's vision extends beyond Earth, with SpaceX making history through groundbreaking advancements in space travel. His dream is to make humanity a multi-planetary species.\"\n\n[Scene 3: Elon Musk on stage at a tech conference, animatedly discussing his latest project. The audience is captivated, hanging on his every word.]\n\nNarrator: \"A charismatic leader and visionary, Musk continues to push the boundaries of what's possible, inspiring millions around the globe with his relentless pursuit of progress.\"\n\n[Scene 4: A montage of Tesla cars driving on a busy city street, a SpaceX rocket in space, and Musk's tweets on a smartphone screen. The scene ends with a close-up of Musk smiling.]\n\nNarrator: \"Elon Musk is not just an entrepreneur; he is a catalyst for change, shaping the future with his daring ideas and indomitable spirit.\"",
+  "scenes": [
+    {
+      "scene": "Scene 1: A bustling Tesla factory with workers assembling electric cars. The camera pans across the assembly line, focusing on the precision and speed of the process.",
+      "path": "/generated/elon_musk_2024-11-25T17-29-34-722Z/images/scene_1.jpg"
+    },
+    {
+      "scene": "Scene 2: A SpaceX rocket launch site, with a rocket lifting off into the sky. The camera follows the rocket as it ascends, leaving a trail of smoke behind.",
+      "path": "/generated/elon_musk_2024-11-25T17-29-34-722Z/images/scene_2.jpg"
+    },
+    {
+      "scene": "Scene 3: Elon Musk on stage at a tech conference, animatedly discussing his latest project. The audience is captivated, hanging on his every word.",
+      "path": "/generated/elon_musk_2024-11-25T17-29-34-722Z/images/scene_3.jpg"
+    },
+    {
+      "scene": "Scene 4: A montage of Tesla cars driving on a busy city street, a SpaceX rocket in space, and Musk's tweets on a smartphone screen. The scene ends with a close-up of Musk smiling.",
+      "path": "/generated/elon_musk_2024-11-25T17-29-34-722Z/images/scene_4.jpg"
+    }
+  ],
+  "narrations": [
+    {
+      "narration": "In the world of innovation and technology, few names stand out like Elon Musk. From revolutionizing the auto industry with Tesla, he has paved the way for a sustainable future.",
+      "path": "/generated/elon_musk_2024-11-25T17-29-34-722Z/audio/narration_1.mp3"
+    },
+    {
+      "narration": "Musk's vision extends beyond Earth, with SpaceX making history through groundbreaking advancements in space travel. His dream is to make humanity a multi-planetary species.",
+      "path": "/generated/elon_musk_2024-11-25T17-29-34-722Z/audio/narration_2.mp3"
+    },
+    {
+      "narration": "A charismatic leader and visionary, Musk continues to push the boundaries of what's possible, inspiring millions around the globe with his relentless pursuit of progress.",
+      "path": "/generated/elon_musk_2024-11-25T17-29-34-722Z/audio/narration_3.mp3"
+    },
+    {
+      "narration": "Elon Musk is not just an entrepreneur; he is a catalyst for change, shaping the future with his daring ideas and indomitable spirit.",
+      "path": "/generated/elon_musk_2024-11-25T17-29-34-722Z/audio/narration_4.mp3"
+    }
+  ],
+  "video": "/generated/elon_musk_2024-11-25T17-29-34-722Z/video/final_video.mp4"
+}

@@ -1,0 +1,42 @@
+{
+  "title": "narendra modi",
+  "timestamp": "2024-11-25T17-51-54-613Z",
+  "script": "[Scene 1: A bustling street in India, with people walking, vendors selling goods, and a large billboard displaying Narendra Modi's image with the Indian flag in the background.]\n\nNarrator: \"In the heart of India, amidst the vibrant chaos of daily life, one figure stands prominent - Narendra Modi, the 14th Prime Minister of India. A leader known for his charismatic speeches and transformative policies.\"\n\n[Scene 2: A montage of Modi addressing a large crowd at a rally, engaging with farmers in a field, and sitting in a high-level meeting with international leaders.]\n\nNarrator: \"Modi's journey from a humble beginning as a tea seller to a global statesman is a testament to his relentless dedication and vision. His leadership has brought significant changes, from economic reforms to international diplomacy.\"\n\n[Scene 3: A serene setting at the Sabarmati Ashram, with Modi walking quietly and reflecting. The camera pans to a group of young people discussing technology and innovation.]\n\nNarrator: \"Rooted in India's rich heritage, Modi's vision for the future embraces innovation and progress. His initiatives like 'Digital India' and 'Make in India' aim to propel the nation into a new era of growth and opportunity.\"\n\n[Scene 4: A sunset view over the Indian Parliament building, symbolizing hope and new beginnings.]\n\nNarrator: \"As India strides forward, Narendra Modi remains a pivotal force, navigating challenges and steering the nation towards a promising future. His legacy continues to inspire millions across the globe.\"",
+  "scenes": [
+    {
+      "scene": "Scene 1: A bustling street in India, with people walking, vendors selling goods, and a large billboard displaying Narendra Modi's image with the Indian flag in the background.",
+      "path": "/generated/narendra_modi_2024-11-25T17-51-54-613Z/images/scene_1.jpg"
+    },
+    {
+      "scene": "Scene 2: A montage of Modi addressing a large crowd at a rally, engaging with farmers in a field, and sitting in a high-level meeting with international leaders.",
+      "path": "/generated/narendra_modi_2024-11-25T17-51-54-613Z/images/scene_2.jpg"
+    },
+    {
+      "scene": "Scene 3: A serene setting at the Sabarmati Ashram, with Modi walking quietly and reflecting. The camera pans to a group of young people discussing technology and innovation.",
+      "path": "/generated/narendra_modi_2024-11-25T17-51-54-613Z/images/scene_3.jpg"
+    },
+    {
+      "scene": "Scene 4: A sunset view over the Indian Parliament building, symbolizing hope and new beginnings.",
+      "path": "/generated/narendra_modi_2024-11-25T17-51-54-613Z/images/scene_4.jpg"
+    }
+  ],
+  "narrations": [
+    {
+      "narration": "In the heart of India, amidst the vibrant chaos of daily life, one figure stands prominent - Narendra Modi, the 14th Prime Minister of India. A leader known for his charismatic speeches and transformative policies.",
+      "path": "/generated/narendra_modi_2024-11-25T17-51-54-613Z/audio/narration_1.mp3"
+    },
+    {
+      "narration": "Modi's journey from a humble beginning as a tea seller to a global statesman is a testament to his relentless dedication and vision. His leadership has brought significant changes, from economic reforms to international diplomacy.",
+      "path": "/generated/narendra_modi_2024-11-25T17-51-54-613Z/audio/narration_2.mp3"
+    },
+    {
+      "narration": "Rooted in India's rich heritage, Modi's vision for the future embraces innovation and progress. His initiatives like 'Digital India' and 'Make in India' aim to propel the nation into a new era of growth and opportunity.",
+      "path": "/generated/narendra_modi_2024-11-25T17-51-54-613Z/audio/narration_3.mp3"
+    },
+    {
+      "narration": "As India strides forward, Narendra Modi remains a pivotal force, navigating challenges and steering the nation towards a promising future. His legacy continues to inspire millions across the globe.",
+      "path": "/generated/narendra_modi_2024-11-25T17-51-54-613Z/audio/narration_4.mp3"
+    }
+  ],
+  "video": "/generated/narendra_modi_2024-11-25T17-51-54-613Z/video/final_video.mp4"
+}
