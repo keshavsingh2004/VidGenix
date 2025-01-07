@@ -36,14 +36,14 @@ An AI-powered application that generates video content from text prompts using N
 
 ### 🚀 Text-to-Video Generation
 - Enter a simple text prompt to automatically generate story scripts and scenes.
-- VidGenix leverages advanced AI to craft coherent narratives from basic input, making video creation easy and intuitive.
+- VidGenix uses Groq LLaMa 3.3 70B to craft coherent narratives from basic input, making video creation easy and intuitive.
 
 ### 🎨 AI-powered Image Generation
-- Utilizes **DALL-E 3** to generate relevant and high-quality images for each scene.
+- Utilizes Flux model to generate relevant and high-quality images for each scene.
 - Each scene is accompanied by a visually appealing and contextually accurate image, automatically created based on the generated script.
 
 ### 🎙️ AI Voiceover/Narration
-- Converts text into realistic, human-like speech with **ElevenLabs**' cutting-edge AI voice synthesis technology.
+- Converts text into realistic, human-like speech with Deepgram's cutting-edge AI voice synthesis technology.
 - Provides natural-sounding narration that matches the tone and content of the generated script.
 
 ### 🎥 Automated Video Assembly
@@ -88,191 +88,15 @@ An AI-powered application that generates video content from text prompts using N
 ```
 
 
-###  Project Index
-<details open>
-	<summary><b><code>VIDGENIX/</code></b></summary>
-	<details> <!-- __root__ Submodule -->
-		<summary><b>__root__</b></summary>
-		<blockquote>
-			<table>
-			<tr>
-				<td><b><a href='https://github.com/keshavsingh2004/VidGenix/blob/master/pnpm-lock.yaml'>pnpm-lock.yaml</a></b></td>
-			</tr>
-			<tr>
-				<td><b><a href='https://github.com/keshavsingh2004/VidGenix/blob/master/next.config.ts'>next.config.ts</a></b></td>
-			</tr>
-			<tr>
-				<td><b><a href='https://github.com/keshavsingh2004/VidGenix/blob/master/tsconfig.json'>tsconfig.json</a></b></td>
-			</tr>
-			<tr>
-				<td><b><a href='https://github.com/keshavsingh2004/VidGenix/blob/master/middleware.ts'>middleware.ts</a></b></td>
-			</tr>
-			<tr>
-				<td><b><a href='https://github.com/keshavsingh2004/VidGenix/blob/master/postcss.config.mjs'>postcss.config.mjs</a></b></td>
-			</tr>
-			<tr>
-				<td><b><a href='https://github.com/keshavsingh2004/VidGenix/blob/master/package.json'>package.json</a></b></td>
-			</tr>
-			<tr>
-				<td><b><a href='https://github.com/keshavsingh2004/VidGenix/blob/master/components.json'>components.json</a></b></td>
-			</tr>
-			<tr>
-				<td><b><a href='https://github.com/keshavsingh2004/VidGenix/blob/master/tailwind.config.ts'>tailwind.config.ts</a></b></td>
-			</tr>
-			</table>
-		</blockquote>
-	</details>
-	<details> <!-- src Submodule -->
-		<summary><b>src</b></summary>
-		<blockquote>
-			<details>
-				<summary><b>types</b></summary>
-				<blockquote>
-					<table>
-					<tr>
-						<td><b><a href='https://github.com/keshavsingh2004/VidGenix/blob/master/src/types/clarifai.ts'>clarifai.ts</a></b></td>
-					</tr>
-					</table>
-				</blockquote>
-			</details>
-			<details>
-				<summary><b>lib</b></summary>
-				<blockquote>
-					<table>
-					<tr>
-						<td><b><a href='https://github.com/keshavsingh2004/VidGenix/blob/master/src/lib/utils.ts'>utils.ts</a></b></td>
-					</tr>
-					</table>
-				</blockquote>
-			</details>
-			<details>
-				<summary><b>components</b></summary>
-				<blockquote>
-					<details>
-						<summary><b>ui</b></summary>
-						<blockquote>
-							<table>
-							<tr>
-								<td><b><a href='https://github.com/keshavsingh2004/VidGenix/blob/master/src/components/ui/toaster.tsx'>toaster.tsx</a></b></td>
-							</tr>
-							<tr>
-								<td><b><a href='https://github.com/keshavsingh2004/VidGenix/blob/master/src/components/ui/scroll-area.tsx'>scroll-area.tsx</a></b></td>
-							</tr>
-							<tr>
-								<td><b><a href='https://github.com/keshavsingh2004/VidGenix/blob/master/src/components/ui/input.tsx'>input.tsx</a></b></td>
-							</tr>
-							<tr>
-								<td><b><a href='https://github.com/keshavsingh2004/VidGenix/blob/master/src/components/ui/toast.tsx'>toast.tsx</a></b></td>
-							</tr>
-							<tr>
-								<td><b><a href='https://github.com/keshavsingh2004/VidGenix/blob/master/src/components/ui/button.tsx'>button.tsx</a></b></td>
-							</tr>
-							<tr>
-								<td><b><a href='https://github.com/keshavsingh2004/VidGenix/blob/master/src/components/ui/skeleton.tsx'>skeleton.tsx</a></b></td>
-							</tr>
-							<tr>
-								<td><b><a href='https://github.com/keshavsingh2004/VidGenix/blob/master/src/components/ui/card.tsx'>card.tsx</a></b></td>
-							</tr>
-							</table>
-						</blockquote>
-					</details>
-				</blockquote>
-			</details>
-			<details>
-				<summary><b>hooks</b></summary>
-				<blockquote>
-					<table>
-					<tr>
-						<td><b><a href='https://github.com/keshavsingh2004/VidGenix/blob/master/src/hooks/use-toast.ts'>use-toast.ts</a></b></td>
-					</tr>
-					</table>
-				</blockquote>
-			</details>
-			<details>
-				<summary><b>utils</b></summary>
-				<blockquote>
-					<table>
-					<tr>
-						<td><b><a href='https://github.com/keshavsingh2004/VidGenix/blob/master/src/utils/rate-limiter.ts'>rate-limiter.ts</a></b></td>
-					</tr>
-					<tr>
-						<td><b><a href='https://github.com/keshavsingh2004/VidGenix/blob/master/src/utils/genration.ts'>genration.ts</a></b></td>
-					</tr>
-					<tr>
-						<td><b><a href='https://github.com/keshavsingh2004/VidGenix/blob/master/src/utils/file.ts'>file.ts</a></b></td>
-					</tr>
-					<tr>
-						<td><b><a href='https://github.com/keshavsingh2004/VidGenix/blob/master/src/utils/clarifai.ts'>clarifai.ts</a></b></td>
-					</tr>
-					<tr>
-						<td><b><a href='https://github.com/keshavsingh2004/VidGenix/blob/master/src/utils/media.ts'>media.ts</a></b></td>
-					</tr>
-					</table>
-				</blockquote>
-			</details>
-			<details>
-				<summary><b>app</b></summary>
-				<blockquote>
-					<table>
-					<tr>
-						<td><b><a href='https://github.com/keshavsingh2004/VidGenix/blob/master/src/app/layout.tsx'>layout.tsx</a></b></td>
-					</tr>
-					<tr>
-						<td><b><a href='https://github.com/keshavsingh2004/VidGenix/blob/master/src/app/globals.css'>globals.css</a></b></td>
-					</tr>
-					<tr>
-						<td><b><a href='https://github.com/keshavsingh2004/VidGenix/blob/master/src/app/page.tsx'>page.tsx</a></b></td>
-					</tr>
-					</table>
-					<details>
-						<summary><b>api</b></summary>
-						<blockquote>
-							<details>
-								<summary><b>demo</b></summary>
-								<blockquote>
-									<table>
-									<tr>
-										<td><b><a href='https://github.com/keshavsingh2004/VidGenix/blob/master/src/app/api/demo/route.ts'>route.ts</a></b></td>
-									</tr>
-									</table>
-								</blockquote>
-							</details>
-							<details>
-								<summary><b>generate</b></summary>
-								<blockquote>
-									<table>
-									<tr>
-										<td><b><a href='https://github.com/keshavsingh2004/VidGenix/blob/master/src/app/api/generate/route.ts'>route.ts</a></b></td>
-									</tr>
-									</table>
-								</blockquote>
-							</details>
-							<details>
-								<summary><b>clarifai</b></summary>
-								<blockquote>
-									<table>
-									<tr>
-										<td><b><a href='https://github.com/keshavsingh2004/VidGenix/blob/master/src/app/api/clarifai/route.ts'>route.ts</a></b></td>
-									</tr>
-									</table>
-								</blockquote>
-							</details>
-						</blockquote>
-					</details>
-				</blockquote>
-			</details>
-		</blockquote>
-	</details>
-</details>
 
 ## Tech Stack
 
 - **Frontend**: Next.js 15, React 19, shadcn
 - **Authentication**: Clerk
 - **AI Services**: 
-  - OpenAI GPT-4o (Script Generation)
-  - DALL-E 3 (Image Generation)
-  - ElevenLabs (Text-to-Speech)
+	- Groq LLaMa 3.3 70B (Script Generation)
+	- Flux Model (Image Generation) 
+	- Deepgram (Text-to-Speech)
 - **Video Processing**: FFmpeg
 - **Styling**: TailwindCSS, Radix UI Components
 
@@ -306,6 +130,9 @@ Install VidGenix using one of the following methods:
 ```sh
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
 CLERK_SECRET_KEY=your_clerk_secret_key
+GROQ_API_KEY=your_groq_api_key
+DEEPGRAM_API_KEY=your_deepgram_api_key
+IMAGE_GENERATION_API_URL=cloudflareworker_url_ai_flux
 ```
 
 4. Install the project dependencies:

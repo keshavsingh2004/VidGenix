@@ -1,9 +1,11 @@
-import { writeFile, mkdir } from 'fs/promises';
+import { writeFile, mkdir, chmod } from 'fs/promises';
 import path from 'path';
 
 export async function ensureDir(dirPath: string) {
   try {
     await mkdir(dirPath, { recursive: true });
+    // Set directory permissions to 755
+    await chmod(dirPath, 0o755);
   } catch (error) {
     if ((error as any).code !== 'EEXIST') {
       throw error;

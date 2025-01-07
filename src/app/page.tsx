@@ -12,7 +12,6 @@ import { useToast } from "@/hooks/use-toast";
 
 interface FormData {
   title: string;
-  PAT: string;
 }
 
 interface Scene {
@@ -44,7 +43,7 @@ interface ResponseData {
 
 export default function Home() {
   const { isSignedIn, user } = useUser();
-  const [formData, setFormData] = useState<FormData>({ title: "", PAT: "" });
+  const [formData, setFormData] = useState<FormData>({ title: "" });
   const [responseData, setResponseData] = useState<ResponseData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
@@ -131,36 +130,15 @@ export default function Home() {
           {/* Left Column */}
           <div className="space-y-6">
             <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="flex gap-4">
-                <Input
-                  type="text"
-                  name="title"
-                  value={formData.title}
-                  onChange={handleInputChange}
-                  placeholder="Enter title"
-                  required
-                  className="flex-1 bg-gray-800 border-gray-700 text-white placeholder-gray-400"
-                />
-                <div className="flex-1 space-y-2">
-                  <Input
-                    type="password"
-                    name="PAT"
-                    value={formData.PAT}
-                    onChange={handleInputChange}
-                    placeholder="Enter Personal Access Token"
-                    required
-                    className="w-full bg-gray-800 border-gray-700 text-white placeholder-gray-400"
-                  />
-                  <Link
-                    href="https://clarifai.com/settings/security"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs text-blue-400 hover:text-blue-300 transition-colors inline-flex items-center gap-1"
-                  >
-                    Get your Personal Access Token
-                  </Link>
-                </div>
-              </div>
+              <Input
+                type="text"
+                name="title"
+                value={formData.title}
+                onChange={handleInputChange}
+                placeholder="Enter topic"
+                required
+                className="flex-1 bg-gray-800 border-gray-700 text-white placeholder-gray-400"
+              />
               <Button
                 type="submit"
                 disabled={isLoading || !isSignedIn}

@@ -1,0 +1,242 @@
+import { GenerationContext, GenerationMetadata, APIError, GenerationResult } from '@/types/types';
+import path from 'path';
+import Groq from "groq-sdk";
+import fs from 'fs';
+import https from 'https';
+import { Readable } from 'stream';
+
+
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+
+// Add this helper function
+async function webStreamToNodeStream(webStream: ReadableStream): Promise<Readable> {
+  const reader = webStream.getReader();
+  return new Readable({
+    async read() {
+      try {
+        const { done, value } = await reader.read();
+        if (done) {
+          this.push(null);
+        } else {
+          this.push(Buffer.from(value));
+        }
+      } catch (error) {
+        this.destroy(error as Error);
+      }
+    },
+    destroy(error, callback) {
+      reader.cancel().then(() => callback(error)).catch(callback);
+    }
+  });
+}
+
+export function createProjectDirectories(title: string, timestamp: string) {
+  const sanitizedTitle = title.replace(/[^a-zA-Z0-9]/g, '_').toLowerCase();
+  const projectDir = path.join(process.cwd(), 'public', 'generated', sanitizedTitle + '_' + timestamp);
+  const imagesDir = path.join(projectDir, 'images');
+  const audioDir = path.join(projectDir, 'audio');
+  const videoDir = path.join(projectDir, 'video');
+
+  return {
+    projectDir,
+    imagesDir,
+    audioDir,
+    videoDir,
+    sanitizedTitle
+  };
+}
+
+export async function generateImage(
+  scene: string,
+  metadata: GenerationMetadata,
+  context: GenerationContext
+): Promise<GenerationResult> {
+  console.log(`🎨 Generating image for scene: "${scene}"...`);
+  const { imagesDir, sanitizedTitle, timestamp } = context;
+
+  return withRetry(async () => {
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+
+      const response = await fetch(process.env.IMAGE_GENERATION_API_URL!, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          prompt: scene,
+          steps: 8
+        }),
+        signal: controller.signal
+      });
+
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        throw new Error(`Image generation failed: ${response.statusText}`);
+      }
+
+      // Handle binary image data instead of JSON
+      const imageBuffer = await response.arrayBuffer();
+      const safeSceneName = scene.slice(0, 50).replace(/[^a-z0-9]/gi, '_');
+      const imagePath = path.join(imagesDir, `scene_${safeSceneName}.png`);
+
+      // Write binary data directly to file
+      await fs.promises.writeFile(imagePath, Buffer.from(imageBuffer));
+
+      console.log(`✅ Generated image for scene: "${scene}"`);
+      return {
+        scene,
+        path: `/generated/${sanitizedTitle}_${timestamp}/images/scene_${safeSceneName}.png`,
+        fullPath: imagePath
+      };
+    } catch (error) {
+      const isAPIError = (err: unknown): err is APIError => {
+        return err instanceof Error && 'code' in err;
+      };
+
+      if (error instanceof Error) {
+        if (error.name === 'AbortError') {
+          throw new Error('Image generation timed out');
+        }
+        if (isAPIError(error) && error.code === 'ETIMEDOUT') {
+          throw new Error('Network timeout');
+        }
+      }
+      throw error;
+    }
+  }, 3, 5000); // 3 retries with 5 second initial delay
+}
+
+export async function generateAudio(
+  narration: string,
+  metadata: GenerationMetadata,
+  context: GenerationContext
+): Promise<GenerationResult> {
+  console.log(`🎵 Generating audio for narration: "${narration}"...`);
+  const { audioDir, sanitizedTitle, timestamp } = context;
+
+  return withRetry(async () => {
+    return new Promise((resolve, reject) => {
+      try {
+        const safeNarrationName = narration.slice(0, 50).replace(/[^a-z0-9]/gi, '_');
+        const audioPath = path.join(audioDir, `narration_${safeNarrationName}.mp3`);
+
+        const options = {
+          hostname: 'api.deepgram.com',
+          path: '/v1/speak?model=aura-asteria-en',
+          method: 'POST',
+          headers: {
+            'Authorization': `Token ${process.env.DEEPGRAM_API_KEY}`,
+            'Content-Type': 'text/plain',
+          }
+        };
+
+        const req = https.request(options, (res) => {
+          if (res.statusCode === 429) {
+            // Specific handling for rate limit
+            reject(new Error('Rate limit exceeded'));
+            return;
+          }
+
+          if (res.statusCode !== 200) {
+            reject(new Error(`Deepgram API error: ${res.statusCode} ${res.statusMessage}`));
+            return;
+          }
+
+          const chunks: Buffer[] = [];
+          res.on('data', (chunk) => chunks.push(chunk));
+          res.on('end', async () => {
+            try {
+              const audioBuffer = Buffer.concat(chunks);
+              await fs.promises.writeFile(audioPath, audioBuffer);
+              console.log(`✅ Generated audio for narration: "${narration}"`);
+              resolve({
+                narration,
+                path: `/generated/${sanitizedTitle}_${timestamp}/audio/narration_${safeNarrationName}.mp3`,
+                fullPath: audioPath
+              });
+            } catch (error) {
+              reject(error);
+            }
+          });
+        });
+
+        req.on('error', reject);
+        req.write(narration);
+        req.end();
+
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }, 5, 2000); // 5 retries with 2 second initial delay
+}
+
+export async function generateScript(title: string) {
+  console.log(`🤖 Generating script for topic: "${title}"...`);
+  try {
+    const completion = await groq.chat.completions.create({
+      messages: [
+        {
+          role: "system",
+          content: "You are a family-friendly educational content creator. Generate only safe, appropriate content suitable for all ages. Avoid any adult themes, violence, or controversial topics."
+        },
+        {
+          role: "user",
+          content: `Create an educational and engaging video script about "${title}" with clear scene descriptions in [brackets] and narration. Format should be:
+            [Scene description - keep it informative no text and family-friendly also dont use any adult themes, violence, or controversial topics]
+            Narrator: "Educational and engaging narration text"
+            
+            Guidelines:
+            - Create 3-4 scenes
+            - Focus on educational value
+            - Keep content suitable for all ages
+            - Use positive and inspiring language
+            - Stick to factual and educational content
+            - Avoid any controversial or sensitive topics`
+        }
+      ],
+      model: "llama-3.3-70b-versatile",
+      temperature: 0.7,
+      top_p: 0.8,
+    });
+
+    const scriptText = completion.choices[0]?.message?.content;
+
+    if (!scriptText) {
+      throw new Error('No script text in response');
+    }
+
+    console.log('📝 Generated Script:', scriptText);
+    return scriptText;
+  } catch (error) {
+    console.error('❌ Script generation error:', error);
+    throw error;
+  }
+}
+async function withRetry<T>(
+  fn: () => Promise<T>,
+  maxRetries: number,
+  initialDelay: number
+): Promise<T> {
+  let lastError: Error;
+  let delay = initialDelay;
+
+  for (let i = 0; i < maxRetries; i++) {
+    try {
+      return await fn();
+    } catch (error) {
+      lastError = error as Error;
+      console.warn(`Attempt ${i + 1} failed: ${lastError.message}`);
+
+      if (i < maxRetries - 1) {
+        await new Promise(resolve => setTimeout(resolve, delay));
+        delay *= 2; // Exponential backoff
+      }
+    }
+  }
+
+  throw lastError!;
+}

@@ -1,19 +1,26 @@
 import { exec } from 'child_process';
 import { promisify } from 'util';
 import ffmpeg from 'fluent-ffmpeg';
+import { which } from 'shelljs';
 
 const execAsync = promisify(exec);
 
+// Get ffmpeg path
+const FFMPEG_PATH = which('ffmpeg')?.toString() || '/usr/bin/ffmpeg';
+ffmpeg.setFfmpegPath(FFMPEG_PATH);
+
 export async function combineAudioFiles(audioFiles: string[], outputPath: string): Promise<void> {
-  const inputFiles = audioFiles.map(file => `-i "${file}"`).join(' ');
-  const filterComplex = audioFiles.map((_, i) => `[${i}:0]`).join('') + `concat=n=${audioFiles.length}:v=0:a=1[out]`;
-
-  const command = `ffmpeg ${inputFiles} -filter_complex "${filterComplex}" -map "[out]" "${outputPath}"`;
-
   try {
-    await execAsync(command);
+    const inputFiles = audioFiles.map(file => `-i "${file}"`).join(' ');
+    const filterComplex = audioFiles.map((_, i) => `[${i}:0]`).join('') + `concat=n=${audioFiles.length}:v=0:a=1[out]`;
+    const command = `${FFMPEG_PATH} ${inputFiles} -filter_complex "${filterComplex}" -map "[out]" "${outputPath}"`;
+
+    await execAsync(command, { shell: '/bin/bash' });
   } catch (error) {
     console.error('Error combining audio files:', error);
+    if (error instanceof Error && error.message.includes('Permission denied')) {
+      console.error('FFmpeg permission error. Please ensure ffmpeg is installed and has proper permissions.');
+    }
     throw error;
   }
 }
@@ -24,7 +31,7 @@ export async function createVideoSlideshow(
   outputPath: string,
   totalDuration: number
 ): Promise<void> {
-  return new Promise((resolve, reject) => {
+  return new Promise<void>((resolve, reject) => {
     const imageDuration = totalDuration / imagePaths.length;
 
     const command = ffmpeg();
@@ -39,6 +46,7 @@ export async function createVideoSlideshow(
 
     // Configure output
     command
+      .setFfmpegPath(FFMPEG_PATH)
       .complexFilter([
         {
           filter: 'concat',
@@ -56,8 +64,14 @@ export async function createVideoSlideshow(
         '-shortest'
       ])
       .output(outputPath)
+      .on('error', (err) => {
+        console.error('Video generation error:', err);
+        if (err.message.includes('Permission denied')) {
+          console.error('FFmpeg permission error. Please ensure ffmpeg is installed and has proper permissions.');
+        }
+        reject(err);
+      })
       .on('end', () => resolve())
-      .on('error', reject)
       .run();
   });
 }
