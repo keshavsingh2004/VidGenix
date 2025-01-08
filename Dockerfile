@@ -1,29 +1,44 @@
-FROM node:18-alpine AS base
-RUN apk add --no-cache ffmpeg
-RUN corepack enable && corepack prepare pnpm@latest --activate
+# Use Node.js LTS image
+FROM node:20-slim
 
-FROM base AS deps
-RUN apk add --no-cache libc6-compat
-WORKDIR /app
-COPY package.json ./
-COPY pnpm-lock.yaml* ./
-RUN pnpm install --frozen-lockfile
+# Install system dependencies including FFmpeg
+RUN apt-get update && apt-get install -y \
+  ffmpeg \
+  && rm -rf /var/lib/apt/lists/*
 
-FROM base AS builder
+# Create app directory
 WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
+
+# Install pnpm
+RUN npm install -g pnpm
+
+# Copy package files
+COPY package.json pnpm-lock.yaml ./
+
+# Install dependencies with limited network concurrency to avoid 429 errors
+RUN pnpm install --network-concurrency 1
+
+# Copy the rest of the app
 COPY . .
-RUN pnpm run build
 
-FROM base AS runner
-WORKDIR /app
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
-COPY --from=builder /app/public ./public
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-USER nextjs
+# Create directories for generated content
+RUN mkdir -p public/generated
+
+# Set permissions
+RUN chmod -R 755 public/generated
+
+# Build the Next.js app
+RUN pnpm build
+
+# Environment variables will be populated from .env.docker file
+ENV NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=""
+ENV CLERK_SECRET_KEY=""
+ENV GROQ_API_KEY=""
+ENV DEEPGRAM_API_KEY=""
+ENV IMAGE_GENERATION_API_URL=""
+
+# Expose port
 EXPOSE 3000
-ENV PORT 3000
-ENV NODE_ENV production
-CMD ["pnpm","run","start"]
+
+# Start the application
+CMD ["pnpm", "start"]

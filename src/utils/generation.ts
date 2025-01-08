@@ -90,7 +90,8 @@ export async function generateImage(
         scene,
         path: `/generated/${sanitizedTitle}_${timestamp}/images/scene_${safeSceneName}.png`,
         fullPath: imagePath,
-        metadata
+        metadata,
+        text: scene // Add narration text
       };
     } catch (error) {
       const isAPIError = (err: unknown): err is APIError => {
@@ -136,16 +137,13 @@ export async function generateAudio(
 
         const req = https.request(options, (res) => {
           if (res.statusCode === 429) {
-            // Specific handling for rate limit
             reject(new Error('Rate limit exceeded'));
             return;
           }
-
           if (res.statusCode !== 200) {
             reject(new Error(`Deepgram API error: ${res.statusCode} ${res.statusMessage}`));
             return;
           }
-
           const chunks: Buffer[] = [];
           res.on('data', (chunk) => chunks.push(chunk));
           res.on('end', async () => {
@@ -154,6 +152,7 @@ export async function generateAudio(
               await fs.promises.writeFile(audioPath, audioBuffer);
               console.log(`✅ Generated audio for narration: "${narration}"`);
               resolve({
+                text: narration, // Include the narration text
                 path: `/generated/${sanitizedTitle}_${timestamp}/audio/narration_${safeNarrationName}.mp3`,
                 fullPath: audioPath,
                 metadata
@@ -182,21 +181,28 @@ export async function generateScript(title: string) {
       messages: [
         {
           role: "system",
-          content: "You are a family-friendly educational content creator. Generate only safe, appropriate content suitable for all ages. Avoid any adult themes, violence, or controversial topics."
+          content: "You are a family-friendly educational content creator. Generate only safe, appropriate content suitable for all ages."
         },
         {
           role: "user",
-          content: `Create an educational and engaging video script about "${title}" with clear scene descriptions in [brackets] and narration. Format should be:
-            [Scene description - keep it informative no text and family-friendly also dont use any adult themes, violence, or controversial topics]
-            Narrator: "Educational and engaging narration text"
-            
-            Guidelines:
-            - Create 3-4 scenes
-            - Focus on educational value
-            - Keep content suitable for all ages
-            - Use positive and inspiring language
-            - Stick to factual and educational content
-            - Avoid any controversial or sensitive topics`
+          content: `Create an educational video script about "${title}" with exactly 4 scenes. Use this exact format:
+
+Scene description should be enclosed in square brackets, followed by "Narrator:" on the next line.
+
+For example:
+[A colorful animated scene showing the basics of photosynthesis]
+Narrator: "Plants are nature's incredible food factories..."
+
+[Close-up of leaves absorbing sunlight]
+Narrator: "When sunlight hits the leaves..."
+
+Requirements:
+- Create exactly 4 scenes
+- Each scene must start with square brackets []
+- Each narration must start with "Narrator:" followed by the text in quotes
+- Keep content educational and family-friendly
+- Make scene descriptions clear and detailed
+- Include engaging narration for each scene`
         }
       ],
       model: "llama-3.3-70b-versatile",

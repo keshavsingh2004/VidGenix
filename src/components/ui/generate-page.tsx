@@ -152,8 +152,8 @@ export function GeneratePage() {
             <a 
               href="https://github.com/keshavsingh2004/VidGenix" 
               target="_blank" 
-              rel="noopener noreferrer" 
-              className="text-gray-400 hover:text-white"
+                rel="noopener noreferrer" 
+                className="text-gray-400 hover:text-white"
             >
               <Github className="w-6 h-6" />
             </a>

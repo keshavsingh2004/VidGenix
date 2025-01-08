@@ -36,11 +36,19 @@ export async function POST(req: Request) {
     const script = await generateScript(title);
     await writeFile(path.join(projectDir, 'script.txt'), script);
 
-    // Parse script
-    const scenes = script.match(/\[(.*?)\]/g)?.map(scene => scene.slice(1, -1)) || [];
-    const narrations = script.match(/Narrator: "(.*?)"/g)?.map(narration =>
-      narration.replace('Narrator: "', '').replace('"', '')
-    ) || [];
+    // Parse script with improved regex
+    const scenes = Array.from(script.matchAll(/\[(.*?)\]/g)).map(match => match[1].trim());
+    const narrations = Array.from(script.matchAll(/Narrator:\s*"([^"]+)"/g)).map(match => match[1].trim());
+
+    if (scenes.length === 0 || narrations.length === 0) {
+      console.error('Parsing failed. Script content:', script);
+      throw new Error('Failed to parse script - invalid format or missing content');
+    }
+
+    // Ensure we have matching scenes and narrations
+    while (narrations.length < scenes.length) {
+      narrations.push('No narration provided');
+    }
 
     const context = { imagesDir, audioDir, sanitizedTitle, timestamp };
     const metadata = {}; // Add any metadata you need to pass
@@ -84,7 +92,10 @@ export async function POST(req: Request) {
         script,
         scenes: generatedImages,
         narrations: [
-          ...generatedAudio,
+          ...generatedAudio.map(audio => ({
+            narration: audio.text, // Map text to narration
+            path: audio.path
+          })),
           { narration: 'Combined Audio', path: `/generated/${sanitizedTitle}_${timestamp}/audio/combined_audio.mp3` }
         ],
         video: `/generated/${sanitizedTitle}_${timestamp}/video/final_video.mp4`,

@@ -19,4 +19,5 @@ export interface GenerationResult {
   fullPath: string;
   path: string;
   metadata: Record<string, unknown>;
+  text: string; // Add narration text
 }
