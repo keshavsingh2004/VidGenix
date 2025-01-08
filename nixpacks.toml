@@ -1,2 +1,5 @@
 [phases.setup]
 nixPkgs = ["...", "ffmpeg-full", "x264", "x265", "fdk_aac"]
+
+[phases.build]
+resourceLimits = { memory = "3500M", swap = "1G" }

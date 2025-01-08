@@ -85,7 +85,7 @@ export async function createVideoSlideshow(
     // Add audio
     command.input(audioPath);
 
-    // Configure output
+    // Configure output with memory-efficient settings
     command
       .setFfmpegPath(FFMPEG_PATH)
       .complexFilter([
@@ -102,15 +102,32 @@ export async function createVideoSlideshow(
       .outputOptions([
         '-map [v]',
         `-map ${imagePaths.length}:a`,
-        '-shortest'
+        '-shortest',
+        // Memory-efficient encoding settings
+        '-c:v libx264',
+        '-preset ultrafast',
+        '-crf 28',
+        '-maxrate 1M',
+        '-bufsize 2M',
+        '-threads 1',
+        // Reduce memory usage
+        '-max_muxing_queue_size 1024',
+        // Scale down if needed to reduce memory
+        '-vf scale=1280:720'
       ])
-      .output(outputPath)
-      .on('error', (err) => {
-        console.error('Video generation error:', err);
-        if (err.message.includes('Permission denied')) {
-          console.error('FFmpeg permission error. Please ensure ffmpeg is installed and has proper permissions.');
+      .on('start', (command) => {
+        console.log('Started FFmpeg with command:', command);
+      })
+      .on('progress', (progress) => {
+        console.log('Processing: ', progress.percent, '% done');
+      })
+      .on('error', (err, stdout, stderr) => {
+        if (err.message.includes('SIGKILL')) {
+          reject(new Error('Video generation failed due to memory constraints. Try reducing video quality or file size.'));
+        } else {
+          console.error('FFmpeg stderr:', stderr);
+          reject(err);
         }
-        reject(err);
       })
       .on('end', () => resolve())
       .run();
