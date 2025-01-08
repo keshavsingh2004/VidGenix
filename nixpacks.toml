@@ -1,2 +1,2 @@
 [phases.setup]
-nixPkgs = ["...", "ffmpeg"]
+nixPkgs = ["...", "ffmpeg-full", "x264", "x265", "fdk_aac"]
