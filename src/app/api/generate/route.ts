@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { writeFile } from 'fs/promises';
 import path from 'path';
 import { LRUCache } from 'lru-cache';
+import shell from 'shelljs';
 import { ensureDir, createProjectDirectories } from '@/utils/file';
 import { generateImage, generateAudio, generateScript } from '@/utils/generation';
 import { combineAudioFiles, createVideoSlideshow, getAudioDuration } from '@/utils/media';
@@ -93,12 +94,16 @@ export async function POST(req: Request) {
         scenes: generatedImages,
         narrations: [
           ...generatedAudio.map(audio => ({
-            narration: audio.text, // Map text to narration
-            path: audio.path
+            narration: audio.text,
+            path: `/generated/${sanitizedTitle}_${timestamp}/audio/${path.basename(audio.path)}`
           })),
-          { narration: 'Combined Audio', path: `/generated/${sanitizedTitle}_${timestamp}/audio/combined_audio.mp3` }
+          {
+            narration: 'Combined Audio',
+            path: `/generated/${sanitizedTitle}_${timestamp}/audio/combined_audio.mp3`
+          }
         ],
-        video: `/generated/${sanitizedTitle}_${timestamp}/video/final_video.mp4`,
+        // Ensure video path uses forward slashes and correct public URL format
+        video: `/generated/${sanitizedTitle}_${timestamp}/video/final_video.mp4`.replace(/\\/g, '/'),
         metadata: {
           timestamp: new Date().toISOString(),
           totalDuration: audioLength,
@@ -106,6 +111,10 @@ export async function POST(req: Request) {
         }
       }
     };
+
+    // Add debug logging
+    console.log('Generated video path:', response.data.video);
+    console.log('Physical file exists:', shell.test('-f', videoOutputPath));
 
     responseCache.set(cacheKey, response);
     return NextResponse.json(response);

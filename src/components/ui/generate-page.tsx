@@ -216,10 +216,28 @@ export function GeneratePage() {
             ) : (
               responseData?.data?.video && (
                 <div className="w-full aspect-video rounded-lg overflow-hidden bg-gray-800">
-                  <video controls className="w-full h-full object-contain">
-                    <source src={responseData.data.video} type="video/mp4" />
+                  <video 
+                    controls 
+                    className="w-full h-full object-contain"
+                    onError={(e) => {
+                      console.error("Video loading error:", e);
+                      toast({
+                        title: "Error",
+                        description: "Error loading video. Please try again.",
+                        variant: "destructive",
+                      });
+                    }}
+                  >
+                    <source 
+                      src={responseData.data.video} 
+                      type="video/mp4" 
+                      onError={(e) => console.error("Source error:", e)}
+                    />
                     Your browser does not support the video tag.
                   </video>
+                  <div className="mt-2 text-sm text-gray-400">
+                    Video URL: {responseData.data.video}
+                  </div>
                 </div>
               )
             )}
