@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Script from "next/script";
 import { FileVideo, Github, ChevronRight, Wand2, Layers, Mic } from "lucide-react";
 import { UserButton, SignInButton, useUser } from "@clerk/nextjs";
 
@@ -38,9 +39,9 @@ export function LandingPage() {
 
       <main className="container mx-auto px-4 py-16">
         <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text">
+            <h1 className="text-4xl md:text-6xl font-bold mb-8 bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text leading-tight">
             Transform Text into Engaging Videos
-          </h1>
+            </h1>
           <p className="text-xl text-gray-400 max-w-2xl mx-auto">
             Create professional videos from text in minutes with our AI-powered platform
           </p>
@@ -80,14 +81,19 @@ export function LandingPage() {
         </div>
 
         <div className="max-w-4xl mx-auto">
-          <video 
-            controls 
-            className="w-full rounded-lg shadow-2xl"
-            poster="https://images.unsplash.com/photo-1536240478700-b869070f9279?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80"
-          >
-            <source src="/generated/elon_musk_2024-11-25T17-29-34-722Z/video/final_video.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
+          <div style={{padding:'100% 0 0 0', position:'relative'}}>
+            <iframe 
+              src="https://player.vimeo.com/video/1044890511?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
+              frameBorder="0" 
+              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" 
+              style={{position:'absolute', top:0, left:0, width:'100%', height:'100%'}} 
+              title="final_video"
+            />
+          </div>
+          <Script 
+            src="https://player.vimeo.com/api/player.js"
+            strategy="afterInteractive"
+          />
         </div>
       </main>
 

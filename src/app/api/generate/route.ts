@@ -16,15 +16,6 @@ export async function POST(req: Request) {
   try {
     const { title } = await req.json();
 
-    // Check available memory before starting
-    const usedMemory = process.memoryUsage().heapUsed / 1024 / 1024;
-    if (usedMemory > 200) { // 200MB threshold
-      return NextResponse.json({
-        error: 'Server is currently busy. Please try again later.',
-        details: 'Memory usage too high'
-      }, { status: 503 });
-    }
-
     if (!title) {
       return NextResponse.json(
         { error: 'Topic is required' },
@@ -54,26 +45,18 @@ export async function POST(req: Request) {
     const context = { imagesDir, audioDir, sanitizedTitle, timestamp };
     const metadata = {}; // Add any metadata you need to pass
 
-    // Process images in smaller chunks if there are many
-    const CHUNK_SIZE = 3;
-    const processImagesInChunks = async (scenes: string[]) => {
-      const results = [];
-      for (let i = 0; i < scenes.length; i += CHUNK_SIZE) {
-        const chunk = scenes.slice(i, i + CHUNK_SIZE);
-        const chunkResults = await Promise.all(
-          chunk.map(scene => generateImage(scene, metadata, context))
-        );
-        results.push(...chunkResults);
-        // Add delay between chunks to allow memory cleanup
-        await new Promise(resolve => setTimeout(resolve, 1000));
-      }
-      return results;
-    };
-
-    // Generate assets with chunked processing
+    // Generate assets
     const [generatedImages, generatedAudio] = await Promise.all([
-      processImagesInChunks(scenes),
-      Promise.all(narrations.map(narration => generateAudio(narration, metadata, context)))
+      Promise.all(scenes.map(scene => generateImage(
+        scene,
+        metadata,
+        context
+      ))),
+      Promise.all(narrations.map(narration => generateAudio(
+        narration,
+        metadata,
+        context
+      )))
     ]);
 
     // Process audio and create video
@@ -118,12 +101,6 @@ export async function POST(req: Request) {
 
   } catch (error) {
     console.error('Error in video generation process:', error);
-    if (error instanceof Error && error.message.includes('SIGKILL')) {
-      return NextResponse.json({
-        error: 'Video generation failed due to resource constraints',
-        details: 'Please try with shorter content or reduced quality'
-      }, { status: 503 });
-    }
     return NextResponse.json({
       error: 'Generation failed',
       details: error instanceof Error ? error.message : 'Unknown error'
