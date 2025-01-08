@@ -8,7 +8,7 @@ import { Readable } from 'stream';
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
-// Add this helper function
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function webStreamToNodeStream(webStream: ReadableStream): Promise<Readable> {
   const reader = webStream.getReader();
   return new Readable({
@@ -89,7 +89,8 @@ export async function generateImage(
       return {
         scene,
         path: `/generated/${sanitizedTitle}_${timestamp}/images/scene_${safeSceneName}.png`,
-        fullPath: imagePath
+        fullPath: imagePath,
+        metadata
       };
     } catch (error) {
       const isAPIError = (err: unknown): err is APIError => {
@@ -153,9 +154,9 @@ export async function generateAudio(
               await fs.promises.writeFile(audioPath, audioBuffer);
               console.log(`✅ Generated audio for narration: "${narration}"`);
               resolve({
-                narration,
                 path: `/generated/${sanitizedTitle}_${timestamp}/audio/narration_${safeNarrationName}.mp3`,
-                fullPath: audioPath
+                fullPath: audioPath,
+                metadata
               });
             } catch (error) {
               reject(error);

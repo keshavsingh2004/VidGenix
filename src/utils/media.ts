@@ -1,12 +1,12 @@
 import { exec } from 'child_process';
 import { promisify } from 'util';
 import ffmpeg from 'fluent-ffmpeg';
-import { which } from 'shelljs';
+import shell from 'shelljs'; // Import the entire module
 
 const execAsync = promisify(exec);
 
 // Get ffmpeg path
-const FFMPEG_PATH = which('ffmpeg')?.toString() || '/usr/bin/ffmpeg';
+const FFMPEG_PATH = shell.which('ffmpeg')?.toString() || '/usr/bin/ffmpeg';
 ffmpeg.setFfmpegPath(FFMPEG_PATH);
 
 export async function combineAudioFiles(audioFiles: string[], outputPath: string): Promise<void> {

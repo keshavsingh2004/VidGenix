@@ -7,7 +7,8 @@ export async function ensureDir(dirPath: string) {
     // Set directory permissions to 755
     await chmod(dirPath, 0o755);
   } catch (error) {
-    if ((error as any).code !== 'EEXIST') {
+    // Use type assertion with a more specific error type
+    if ((error as NodeJS.ErrnoException).code !== 'EEXIST') {
       throw error;
     }
   }

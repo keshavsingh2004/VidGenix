@@ -6,18 +6,17 @@ export interface GenerationContext {
 }
 
 export interface GenerationMetadata {
-  [key: string]: any;
+  [key: string]: string | number | boolean | null | undefined | Record<string, unknown>;
 }
 
-export interface APIError extends Error {
-  code?: string;
-  statusCode?: number;
-  response?: any;
+export interface APIError {
+  message: string;
+  code: string | number;
+  details: Record<string, unknown>;
 }
 
 export interface GenerationResult {
-  scene?: string;
-  narration?: string;
-  path: string;
   fullPath: string;
+  path: string;
+  metadata: Record<string, unknown>;
 }
