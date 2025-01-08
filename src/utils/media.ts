@@ -23,7 +23,7 @@ function getFfmpegPath(): string {
   // Verify ffmpeg is actually executable
   try {
     shell.exec(`${ffmpegPath} -version`, { silent: true });
-  } catch (error) {
+  } catch {
     throw new Error(`FFmpeg found at ${ffmpegPath} but is not executable. Please check permissions.`);
   }
 
