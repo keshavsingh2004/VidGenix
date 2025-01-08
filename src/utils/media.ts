@@ -2,6 +2,7 @@ import { exec } from 'child_process';
 import { promisify } from 'util';
 import ffmpeg from 'fluent-ffmpeg';
 import shell from 'shelljs';
+import path from 'path';
 
 const execAsync = promisify(exec);
 
@@ -73,7 +74,46 @@ export async function createVideoSlideshow(
   totalDuration: number
 ): Promise<void> {
   return new Promise<void>((resolve, reject) => {
+    // Validate inputs
+    if (!imagePaths?.length) {
+      reject(new Error('No image paths provided'));
+      return;
+    }
+
+    if (!audioPath) {
+      reject(new Error('No audio path provided'));
+      return;
+    }
+
+    if (!outputPath) {
+      reject(new Error('No output path specified'));
+      return;
+    }
+
+    // Verify all input files exist
+    for (const imagePath of imagePaths) {
+      if (!shell.test('-f', imagePath)) {
+        reject(new Error(`Image file not found: ${imagePath}`));
+        return;
+      }
+    }
+
+    if (!shell.test('-f', audioPath)) {
+      reject(new Error(`Audio file not found: ${audioPath}`));
+      return;
+    }
+
+    // Ensure output directory exists
+    shell.mkdir('-p', path.dirname(outputPath));
+
     const imageDuration = totalDuration / imagePaths.length;
+    console.log('Creating video slideshow with:', {
+      imagePaths,
+      audioPath,
+      outputPath,
+      totalDuration,
+      imageDuration
+    });
 
     const command = ffmpeg();
 
@@ -85,7 +125,7 @@ export async function createVideoSlideshow(
     // Add audio
     command.input(audioPath);
 
-    // Configure output
+    // Configure output with explicit format
     command
       .setFfmpegPath(FFMPEG_PATH)
       .complexFilter([
@@ -102,17 +142,35 @@ export async function createVideoSlideshow(
       .outputOptions([
         '-map [v]',
         `-map ${imagePaths.length}:a`,
-        '-shortest'
+        '-shortest',
+        '-c:v libx264', // Explicitly set video codec
+        '-pix_fmt yuv420p', // Ensure compatibility
+        '-preset medium',
+        '-movflags +faststart'
       ])
-      .output(outputPath)
+      .toFormat('mp4') // Explicitly set output format
+      .output(outputPath) // Set output path
+      .on('start', (commandLine) => {
+        console.log('FFmpeg command:', commandLine);
+      })
+      .on('progress', (progress) => {
+        console.log('Processing:', progress.percent?.toFixed(2) + '%');
+      })
       .on('error', (err) => {
         console.error('Video generation error:', err);
         if (err.message.includes('Permission denied')) {
-          console.error('FFmpeg permission error. Please ensure ffmpeg is installed and has proper permissions.');
+          console.error('FFmpeg permission error. Please check file permissions.');
         }
         reject(err);
       })
-      .on('end', () => resolve())
+      .on('end', () => {
+        console.log('Video generation completed:', outputPath);
+        if (shell.test('-f', outputPath)) {
+          resolve();
+        } else {
+          reject(new Error('Output file was not created'));
+        }
+      })
       .run();
   });
 }
