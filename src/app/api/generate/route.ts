@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { writeFile, readFile } from 'fs/promises';
+import { UTFile } from 'uploadthing/server';
 import path from 'path';
 import { LRUCache } from 'lru-cache';
 import { ensureDir, createProjectDirectories } from '@/utils/file';
@@ -24,9 +25,12 @@ async function uploadVideoFile(videoPath: string): Promise<{ data: UploadData; e
   // Read file buffer using Node.js fs
   const buffer = await readFile(videoPath);
 
-  const uploadResults = await utapi.uploadFiles([
-    new File([buffer], 'final_video.mp4', { type: 'video/mp4' })
-  ]);
+  // Create a UTFile instance with buffer in array
+  const file = new UTFile([buffer], "final_video.mp4", {
+    type: 'video/mp4'
+  });
+
+  const uploadResults = await utapi.uploadFiles([file]);
 
   const uploadResult = uploadResults[0] as UploadThingResponse<typeof uploadResults[0]>;
   if (!isSuccessfulUpload(uploadResult)) {
