@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { writeFile, readFile } from 'fs/promises';
+import { writeFile, readFile, stat } from 'fs/promises';
 import { UTFile } from 'uploadthing/server';
 import path from 'path';
 import { LRUCache } from 'lru-cache';
@@ -22,22 +22,54 @@ function isSuccessfulUpload(response: UploadFileResponse): response is { data: U
 
 // Add utility function for typed file upload
 async function uploadVideoFile(videoPath: string): Promise<{ data: UploadData; error: null }> {
-  // Read file buffer using Node.js fs
-  const buffer = await readFile(videoPath);
+  try {
+    // Verify file exists and is readable
+    const stats = await stat(videoPath);
+    console.log('Video file stats:', {
+      size: stats.size,
+      path: videoPath,
+      exists: true
+    });
 
-  // Create a UTFile instance with buffer in array
-  const file = new UTFile([buffer], "final_video.mp4", {
-    type: 'video/mp4'
-  });
+    if (stats.size === 0) {
+      throw new Error('Video file is empty');
+    }
 
-  const uploadResults = await utapi.uploadFiles([file]);
+    // Read file buffer
+    const buffer = await readFile(videoPath);
+    console.log('Read buffer size:', buffer.length);
 
-  const uploadResult = uploadResults[0] as UploadThingResponse<typeof uploadResults[0]>;
-  if (!isSuccessfulUpload(uploadResult)) {
-    throw new Error('Failed to upload video');
+    // Create UTFile instance
+    const file = new UTFile([buffer], "final_video.mp4", {
+      type: 'video/mp4',
+      lastModified: stats.mtimeMs
+    });
+
+    console.log('Starting upload with file:', {
+      name: file.name,
+      size: file.size,
+      type: file.type
+    });
+
+    // Attempt upload with error capture
+    const uploadResults = await utapi.uploadFiles([file]).catch(error => {
+      console.error('Upload error details:', error);
+      throw error;
+    });
+
+    console.log('Upload results:', uploadResults);
+
+    const uploadResult = uploadResults[0] as UploadThingResponse<typeof uploadResults[0]>;
+    if (!isSuccessfulUpload(uploadResult)) {
+      console.error('Upload failed:', uploadResult.error);
+      throw new Error(`Failed to upload video: ${uploadResult.error?.message || 'Unknown error'}`);
+    }
+
+    return uploadResult;
+  } catch (error) {
+    console.error('Error in uploadVideoFile:', error);
+    throw error;
   }
-
-  return uploadResult;
 }
 
 export async function POST(req: Request) {
