@@ -10,23 +10,6 @@
 <p align="center">
 	<!-- default option, no dependency badges. -->
 </p>
-<br>
-
-##  Table of Contents
-
-- [ Overview](#-overview)
-- [ Features](#-features)
-- [ Project Structure](#-project-structure)
-- [ Project Index](#-project-index)
-- [Tech Stack](#-tech-stack)
-- [ Getting Started](#-getting-started)
-  - [ Prerequisites](#-prerequisites)
-  - [ Installation](#-installation)
-  - [ Usage](#-usage)
-- [ Project Roadmap](#-project-roadmap)
-- [ Contributing](#-contributing)
-- [ License](#-license)
-- [ Acknowledgments](#-acknowledgments)
 
 ##  Overview
 
