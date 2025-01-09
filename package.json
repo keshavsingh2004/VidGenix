@@ -17,6 +17,7 @@
     "@radix-ui/react-toast": "^1.2.2",
     "@types/lru-cache": "^7.10.10",
     "@types/shelljs": "^0.8.15",
+    "@uploadthing/react": "^7.1.5",
     "child_process": "^1.0.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
@@ -31,6 +32,7 @@
     "shelljs": "^0.8.5",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",
+    "uploadthing": "^7.4.4",
     "util": "^0.12.5"
   },
   "devDependencies": {

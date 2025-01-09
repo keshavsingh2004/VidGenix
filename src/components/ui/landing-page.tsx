@@ -1,12 +1,56 @@
 "use client";
 
 import Link from "next/link";
-import Script from "next/script";
-import { FileVideo, Github, ChevronRight, Wand2, Layers, Mic } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { FileVideo, Github, ChevronRight, Wand2, Layers, Mic, Play, Pause, Volume2, VolumeX } from "lucide-react";
 import { UserButton, SignInButton, useUser } from "@clerk/nextjs";
 
 export function LandingPage() {
   const { isSignedIn } = useUser();
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const videoElement = videoRef.current;
+    if (!videoElement) return;
+
+    const handlePlay = () => setIsPlaying(true);
+    const handlePause = () => setIsPlaying(false);
+    const handleEnded = () => setIsPlaying(false);
+
+    videoElement.addEventListener('play', handlePlay);
+    videoElement.addEventListener('pause', handlePause);
+    videoElement.addEventListener('ended', handleEnded);
+
+    return () => {
+      videoElement.removeEventListener('play', handlePlay);
+      videoElement.removeEventListener('pause', handlePause);
+      videoElement.removeEventListener('ended', handleEnded);
+    };
+  }, []);
+
+  const togglePlay = async () => {
+    if (videoRef.current) {
+      try {
+        if (isPlaying) {
+          await videoRef.current.pause();
+        } else {
+          await videoRef.current.play();
+        }
+      } catch (error) {
+        console.error('Error toggling video:', error);
+      }
+    }
+  };
+
+  const toggleMute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !isMuted;
+      setIsMuted(!isMuted);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       <nav className="border-b border-gray-800 px-6 py-4">
@@ -81,19 +125,42 @@ export function LandingPage() {
         </div>
 
         <div className="max-w-4xl mx-auto">
-          <div style={{padding:'100% 0 0 0', position:'relative'}}>
-            <iframe 
-              src="https://player.vimeo.com/video/1044890511?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
-              frameBorder="0" 
-              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" 
-              style={{position:'absolute', top:0, left:0, width:'100%', height:'100%'}} 
-              title="final_video"
+          <div className="relative aspect-video rounded-lg overflow-hidden">
+            <video
+              ref={videoRef}
+              src="https://utfs.io/f/Gv2JxtlSEriP3xBHTmahNj0Hp2GuK6AVSUJBL4Wa8Tymc3Ek"
+              preload="metadata"
+              width="1920"
+              height="1080"
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-auto"
+              style={{ objectFit: 'contain' }}
             />
+            {/* Top right controls */}
+            <div className="absolute top-4 right-4 z-10 flex gap-2">
+              <button
+                onClick={togglePlay}
+                className="bg-black/50 backdrop-blur-sm hover:bg-black/70 rounded-full p-2 transition-colors"
+              >
+                {isPlaying ? (
+                  <Pause className="w-5 h-5 text-white" />
+                ) : (
+                  <Play className="w-5 h-5 text-white" />
+                )}
+              </button>
+              <button
+                onClick={toggleMute}
+                className="bg-black/50 backdrop-blur-sm hover:bg-black/70 rounded-full p-2 transition-colors"
+              >
+                {isMuted ? (
+                  <VolumeX className="w-5 h-5 text-white" />
+                ) : (
+                  <Volume2 className="w-5 h-5 text-white" />
+                )}
+              </button>
+            </div>
+            {/* Center play button */}
+
           </div>
-          <Script 
-            src="https://player.vimeo.com/api/player.js"
-            strategy="afterInteractive"
-          />
         </div>
       </main>
 

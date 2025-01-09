@@ -29,6 +29,7 @@ interface Metadata {
   timestamp: string;
   totalDuration: number;
   durationPerScene: number;
+  videoKey: string; // Add videoKey to metadata
 }
 
 interface ResponseData {
@@ -140,6 +141,11 @@ export function GeneratePage() {
     );
   }
 
+  // Add helper function to get embed URL
+  const getEmbedUrl = (url: string) => {
+    return url.replace('https://utfs.io/f/', 'https://utfs.io/e/');
+  };
+
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       <nav className="border-b border-gray-800 px-6 py-4">
@@ -218,6 +224,8 @@ export function GeneratePage() {
                 <div className="w-full aspect-video rounded-lg overflow-hidden bg-gray-800">
                   <video 
                     controls 
+                    autoPlay
+                    playsInline
                     className="w-full h-full object-contain"
                     onError={(e) => {
                       console.error("Video loading error:", e);
@@ -230,8 +238,7 @@ export function GeneratePage() {
                   >
                     <source 
                       src={responseData.data.video} 
-                      type="video/mp4" 
-                      onError={(e) => console.error("Source error:", e)}
+                      type="video/mp4"
                     />
                     Your browser does not support the video tag.
                   </video>

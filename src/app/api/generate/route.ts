@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { writeFile } from 'fs/promises';
+import { writeFile, readFile } from 'fs/promises';
 import path from 'path';
 import { LRUCache } from 'lru-cache';
 import shell from 'shelljs';
@@ -7,11 +7,35 @@ import { ensureDir, createProjectDirectories } from '@/utils/file';
 import { generateImage, generateAudio, generateScript } from '@/utils/generation';
 import { combineAudioFiles, createVideoSlideshow, getAudioDuration } from '@/utils/media';
 import { GenerationResult } from '@/types/types';
+import { utapi } from '@/utils/uploadthing';
+import { UploadFileResponse, UploadData } from '@/types/uploadthing';
 
 const responseCache = new LRUCache({
   max: 100,
   ttl: 1000 * 60 * 60,
 });
+
+// Add type guard
+function isSuccessfulUpload(response: UploadFileResponse): response is { data: UploadData; error: null } {
+  return response.data !== null;
+}
+
+// Add utility function for typed file upload
+async function uploadVideoFile(videoPath: string): Promise<{ data: UploadData; error: null }> {
+  // Read file buffer using Node.js fs
+  const buffer = await readFile(videoPath);
+
+  const uploadResults = await utapi.uploadFiles([
+    new File([buffer], 'final_video.mp4', { type: 'video/mp4' })
+  ]);
+
+  const uploadResult = uploadResults[0];
+  if (!isSuccessfulUpload(uploadResult)) {
+    throw new Error('Failed to upload video');
+  }
+
+  return uploadResult;
+}
 
 export async function POST(req: Request) {
   try {
@@ -86,6 +110,9 @@ export async function POST(req: Request) {
       audioLength
     );
 
+    // Upload video using typed utility function
+    const uploadResult = await uploadVideoFile(videoOutputPath);
+
     const response = {
       success: true,
       data: {
@@ -102,19 +129,15 @@ export async function POST(req: Request) {
             path: `/generated/${sanitizedTitle}_${timestamp}/audio/combined_audio.mp3`
           }
         ],
-        // Ensure video path uses forward slashes and correct public URL format
-        video: `/generated/${sanitizedTitle}_${timestamp}/video/final_video.mp4`.replace(/\\/g, '/'),
+        video: uploadResult.data.url,
         metadata: {
           timestamp: new Date().toISOString(),
           totalDuration: audioLength,
-          durationPerScene: audioLength / generatedImages.length
+          durationPerScene: audioLength / generatedImages.length,
+          videoKey: uploadResult.data.key
         }
       }
     };
-
-    // Add debug logging
-    console.log('Generated video path:', response.data.video);
-    console.log('Physical file exists:', shell.test('-f', videoOutputPath));
 
     responseCache.set(cacheKey, response);
     return NextResponse.json(response);
