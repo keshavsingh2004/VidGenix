@@ -2,13 +2,12 @@ import { NextResponse } from 'next/server';
 import { writeFile, readFile } from 'fs/promises';
 import path from 'path';
 import { LRUCache } from 'lru-cache';
-import shell from 'shelljs';
 import { ensureDir, createProjectDirectories } from '@/utils/file';
 import { generateImage, generateAudio, generateScript } from '@/utils/generation';
 import { combineAudioFiles, createVideoSlideshow, getAudioDuration } from '@/utils/media';
 import { GenerationResult } from '@/types/types';
 import { utapi } from '@/utils/uploadthing';
-import { UploadFileResponse, UploadData } from '@/types/uploadthing';
+import { UploadFileResponse, UploadData, UploadThingResponse } from '@/types/uploadthing';
 
 const responseCache = new LRUCache({
   max: 100,
@@ -29,7 +28,7 @@ async function uploadVideoFile(videoPath: string): Promise<{ data: UploadData; e
     new File([buffer], 'final_video.mp4', { type: 'video/mp4' })
   ]);
 
-  const uploadResult = uploadResults[0];
+  const uploadResult = uploadResults[0] as UploadThingResponse<typeof uploadResults[0]>;
   if (!isSuccessfulUpload(uploadResult)) {
     throw new Error('Failed to upload video');
   }

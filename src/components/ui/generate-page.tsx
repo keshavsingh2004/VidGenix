@@ -141,16 +141,11 @@ export function GeneratePage() {
     );
   }
 
-  // Add helper function to get embed URL
-  const getEmbedUrl = (url: string) => {
-    return url.replace('https://utfs.io/f/', 'https://utfs.io/e/');
-  };
-
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       <nav className="border-b border-gray-800 px-6 py-4">
         <div className="flex items-center justify-between">
-          <Link href="/" className="text-xl font-bold flex items-center gap-2 text-blue-400">
+          <Link href="/" className="text-xl font-bold flex itemsCenter gap-2 text-blue-400">
             <FileVideo className="w-6 h-6" />
             VidGenix
           </Link>
