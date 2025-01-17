@@ -10,6 +10,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useToast } from "@/hooks/use-toast";
+import AnimatedLoadingWait from "./animated-loading-wait";
 
 interface FormData {
   title: string;
@@ -209,41 +210,41 @@ export function GeneratePage() {
               )}
             </ScrollArea>
           </div>
+         {/* Right Column */}
+<div className="flex items-center justify-center min-h-[calc(100vh-250px)]">
+  {isLoading ? (
+    <AnimatedLoadingWait />
+  ) : (
+    responseData?.data?.video && (
+      <div className="w-full aspect-video rounded-lg overflow-hidden bg-gray-800">
+        <video 
+          controls 
+          autoPlay
+          playsInline
+          className="w-full h-full object-contain"
+          onError={(e) => {
+            console.error("Video loading error:", e);
+            toast({
+              title: "Error",
+              description: "Error loading video. Please try again.",
+              variant: "destructive",
+            });
+          }}
+        >
+          <source 
+            src={responseData.data.video} 
+            type="video/mp4"
+          />
+          Your browser does not support the video tag.
+        </video>
+        <div className="mt-2 text-sm text-gray-400">
+          Video URL: {responseData.data.video}
+        </div>
+      </div>
+    )
+  )}
+</div>
 
-          {/* Right Column */}
-          <div className="flex items-center justify-center min-h-[calc(100vh-250px)]">
-            {isLoading ? (
-              <Skeleton className="w-full aspect-video rounded-lg bg-gray-800" />
-            ) : (
-              responseData?.data?.video && (
-                <div className="w-full aspect-video rounded-lg overflow-hidden bg-gray-800">
-                  <video 
-                    controls 
-                    autoPlay
-                    playsInline
-                    className="w-full h-full object-contain"
-                    onError={(e) => {
-                      console.error("Video loading error:", e);
-                      toast({
-                        title: "Error",
-                        description: "Error loading video. Please try again.",
-                        variant: "destructive",
-                      });
-                    }}
-                  >
-                    <source 
-                      src={responseData.data.video} 
-                      type="video/mp4"
-                    />
-                    Your browser does not support the video tag.
-                  </video>
-                  <div className="mt-2 text-sm text-gray-400">
-                    Video URL: {responseData.data.video}
-                  </div>
-                </div>
-              )
-            )}
-          </div>
         </div>
       </main>
     </div>
