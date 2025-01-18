@@ -30,6 +30,8 @@ async function webStreamToNodeStream(webStream: ReadableStream): Promise<Readabl
   });
 }
 
+
+
 export function createProjectDirectories(title: string, timestamp: string) {
   const sanitizedTitle = title.replace(/[^a-zA-Z0-9]/g, '_').toLowerCase();
   const projectDir = path.join(process.cwd(), 'public', 'generated', sanitizedTitle + '_' + timestamp);

@@ -50,6 +50,7 @@ export function GeneratePage() {
   const [formData, setFormData] = useState<FormData>({ title: "" });
   const [responseData, setResponseData] = useState<ResponseData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [logs, setLogs] = useState<string[]>([]);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -59,6 +60,17 @@ export function GeneratePage() {
         setFormData(JSON.parse(savedFormData));
       }
     }
+  }, []);
+
+  useEffect(() => {
+    const savedLog = console.log;
+    console.log = (...args: any[]) => {
+      setLogs((prev) => [...prev, args.join(" ")]);
+      savedLog(...args);
+    };
+    return () => {
+      console.log = savedLog;
+    };
   }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,6 +94,7 @@ export function GeneratePage() {
     }
     setIsLoading(true);
     try {
+      console.log("Generation started...");
       const response = await fetch("/api/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -98,7 +111,7 @@ export function GeneratePage() {
         setResponseData(data);
       }
     } catch (error) {
-      console.error("Error:", error);
+      console.log("Error:", error);
     } finally {
       setIsLoading(false);
     }
@@ -114,10 +127,10 @@ export function GeneratePage() {
               VidGenix
             </Link>
             <div className="flex items-center gap-4">
-              <a 
-                href="https://github.com/keshavsingh2004/VidGenix" 
-                target="_blank" 
-                rel="noopener noreferrer" 
+              <a
+                href="https://github.com/keshavsingh2004/VidGenix"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-gray-400 hover:text-white"
               >
                 <Github className="w-6 h-6" />
@@ -146,16 +159,16 @@ export function GeneratePage() {
     <div className="min-h-screen bg-gray-900 text-white">
       <nav className="border-b border-gray-800 px-6 py-4">
         <div className="flex items-center justify-between">
-          <Link href="/" className="text-xl font-bold flex itemsCenter gap-2 text-blue-400">
+          <Link href="/" className="text-xl font-bold flex items-center gap-2 text-blue-400">
             <FileVideo className="w-6 h-6" />
             VidGenix
           </Link>
           <div className="flex items-center gap-4">
-            <a 
-              href="https://github.com/keshavsingh2004/VidGenix" 
-              target="_blank" 
-                rel="noopener noreferrer" 
-                className="text-gray-400 hover:text-white"
+            <a
+              href="https://github.com/keshavsingh2004/VidGenix"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-white"
             >
               <Github className="w-6 h-6" />
             </a>
@@ -167,84 +180,113 @@ export function GeneratePage() {
       <main className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Left Column */}
+          {/* Left Column */}
           <div className="space-y-6">
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <Input
-                type="text"
-                name="title"
-                value={formData.title}
-                onChange={handleInputChange}
-                placeholder="Enter topic"
-                required
-                className="flex-1 bg-gray-800 border-gray-700 text-white placeholder-gray-400"
-              />
-              <Button
-                type="submit"
-                disabled={isLoading || !isSignedIn}
-                className="w-full bg-blue-600 text-white hover:bg-blue-700"
-              >
-                Generate Video
-              </Button>
-            </form>
+            {isLoading ? (
+              // Show skeleton loader while loading
+              <SceneNarrationSkeleton />
+            ) : (
+              // Show form and response data when not loading
+              <>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <Input
+                    type="text"
+                    name="title"
+                    value={formData.title}
+                    onChange={handleInputChange}
+                    placeholder="Enter topic"
+                    required
+                    className="flex-1 bg-gray-800 border-gray-700 text-white placeholder-gray-400 rounded-lg"
+                  />
+                  <Button
+                    type="submit"
+                    disabled={isLoading || !isSignedIn}
+                    className="w-full bg-blue-600 text-white hover:bg-blue-700 "
+                  >
+                    Generate Video
+                  </Button>
+                </form>
 
-            <ScrollArea className="h-[calc(100vh-250px)]">
-              {isLoading ? (
-                <SceneNarrationSkeleton />
-              ) : (
-                responseData?.data && (
-                  <div className="space-y-4 pr-4">
-                    {responseData.data.scenes?.map((scene: Scene, index: number) => (
-                      <Card key={index} className="bg-gray-800 border-gray-700">
-                        <CardContent className="p-4 space-y-2">
-                          <p className="text-sm font-semibold text-gray-300">
-                            Scene {index + 1}: {scene.scene.replace(/^Scene \d+:\s*/, "")}
-                          </p>
-                          <p className="text-sm text-gray-400">
-                            Narration {index + 1}: {responseData.data.narrations?.[index]?.narration || ""}
-                          </p>
+                {responseData && (
+                  <ScrollArea className="h-[calc(100vh-250px)]">
+                    <div className="space-y-4 pr-4">
+                      <h3 className="text-lg font-semibold text-gray-300">Script</h3>
+                      <Card className="bg-gray-800 border-gray-700">
+                        <CardContent className="p-4 space-y-2 text-sm text-gray-400">
+                          {responseData.data.script}
                         </CardContent>
                       </Card>
-                    ))}
-                  </div>
-                )
-              )}
-            </ScrollArea>
-          </div>
-         {/* Right Column */}
-<div className="flex items-center justify-center min-h-[calc(100vh-250px)]">
-  {isLoading ? (
-    <AnimatedLoadingWait />
-  ) : (
-    responseData?.data?.video && (
-      <div className="w-full aspect-video rounded-lg overflow-hidden bg-gray-800">
-        <video 
-          controls 
-          autoPlay
-          playsInline
-          className="w-full h-full object-contain"
-          onError={(e) => {
-            console.error("Video loading error:", e);
-            toast({
-              title: "Error",
-              description: "Error loading video. Please try again.",
-              variant: "destructive",
-            });
-          }}
-        >
-          <source 
-            src={responseData.data.video} 
-            type="video/mp4"
-          />
-          Your browser does not support the video tag.
-        </video>
-        <div className="mt-2 text-sm text-gray-400">
-          Video URL: {responseData.data.video}
-        </div>
-      </div>
-    )
-  )}
-</div>
 
+                      <h3 className="text-lg font-semibold text-gray-300">Scenes</h3>
+                      {responseData.data.scenes?.map((scene: Scene, index: number) => (
+                        <Card key={index} className="bg-gray-800 border-gray-700">
+                          <CardContent className="p-4 space-y-2">
+                            <p className="text-sm font-semibold text-gray-300">
+                              Scene {index + 1}: {scene.scene.replace(/^Scene \d+:\s*/, "")}
+                            </p>
+                            <img src={scene.path} alt={`Scene ${index + 1}`} className="rounded" />
+                          </CardContent>
+                        </Card>
+                      ))}
+
+                      <h3 className="text-lg font-semibold text-gray-300">Narrations</h3>
+                      {responseData.data.narrations?.map((narration: Narration, index: number) => (
+                        <Card key={index} className="bg-gray-800 border-gray-700">
+                          <CardContent className="p-4 space-y-2">
+                            <p className="text-sm font-semibold text-gray-300">
+                              Narration {index + 1}: {narration.narration}
+                            </p>
+                            <audio controls src={narration.path} className="w-full">
+                              Your browser does not support the audio tag.
+                            </audio>
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </div>
+                  </ScrollArea>
+                )}
+              </>
+            )}
+          </div>
+
+
+          {/* Right Column */}
+          <div className="flex flex-col items-center justify-center min-h-[calc(100vh-250px)] space-y-4">
+            {isLoading ? (
+              <AnimatedLoadingWait />
+            ) : (
+              responseData?.data?.video && (
+                <div className="w-full aspect-video rounded-lg overflow-hidden bg-gray-800">
+                  <video
+                    controls
+                    autoPlay
+                    playsInline
+                    className="w-full h-full object-contain"
+                    onError={(e) => {
+                      console.error("Video loading error:", e);
+                      toast({
+                        title: "Error",
+                        description: "Error loading video. Please try again.",
+                        variant: "destructive",
+                      });
+                    }}
+                  >
+                    <source
+                      src={responseData.data.video}
+                      type="video/mp4"
+                    />
+                    Your browser does not support the video tag.
+                  </video>
+                  <div className="mt-2 text-sm text-gray-400">
+                    Video URL: {responseData.data.video}
+                  </div>
+                </div>
+              )
+            )}
+
+
+
+          </div>
         </div>
       </main>
     </div>
