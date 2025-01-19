@@ -18,11 +18,15 @@ interface FormData {
 interface Scene {
   scene: string;
   path: string;
+  url: string;
+  narration: string; // Add narration to Scene interface
 }
 
 interface Narration {
   narration: string;
   path: string;
+  startTime: number;
+  duration: number;
 }
 
 interface Metadata {
@@ -195,12 +199,38 @@ export function GeneratePage() {
                     {responseData.data.scenes?.map((scene: Scene, index: number) => (
                       <Card key={index} className="bg-gray-800 border-gray-700">
                         <CardContent className="p-4 space-y-2">
-                          <p className="text-sm font-semibold text-gray-300">
-                            Scene {index + 1}: {scene.scene.replace(/^Scene \d+:\s*/, "")}
-                          </p>
-                          <p className="text-sm text-gray-400">
-                            Narration {index + 1}: {responseData.data.narrations?.[index]?.narration || ""}
-                          </p>
+                          <div className="flex justify-between items-start">
+                            <div className="space-y-2 flex-1">
+                              <p className="text-sm font-semibold text-gray-300">
+                                Scene {index + 1}: {scene.scene}
+                              </p>
+                              {scene.narration && (
+                                <p className="text-sm text-gray-400">
+                                  Narration: {scene.narration}
+                                </p>
+                              )}
+                            </div>
+                            {scene.url && (
+                              <div className="ml-4 w-24 h-24 flex-shrink-0">
+                                <img 
+                                  src={scene.url} 
+                                  alt={`Scene ${index + 1}`}
+                                  className="w-full h-full object-cover rounded"
+                                />
+                              </div>
+                            )}
+                          </div>
+                          {responseData.data.narrations?.[index]?.path && (
+                            <div className="mt-2">
+                              <audio 
+                                controls 
+                                className="w-full"
+                                src={responseData.data.narrations[index].path}
+                              >
+                                Your browser does not support the audio element.
+                              </audio>
+                            </div>
+                          )}
                         </CardContent>
                       </Card>
                     ))}

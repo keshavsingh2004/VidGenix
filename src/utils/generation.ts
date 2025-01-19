@@ -4,7 +4,9 @@ import Groq from "groq-sdk";
 import fs from 'fs';
 import https from 'https';
 import { Readable } from 'stream';
-
+// Remove these imports
+// import { createClient } from "@deepgram/sdk";
+// import { AssemblyAI } from 'assemblyai';
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
@@ -223,6 +225,100 @@ Requirements:
     throw error;
   }
 }
+
+interface Word {
+  text: string;
+  start: number;
+  end: number;
+}
+
+interface AssemblyAIUploadResponse {
+  id: string;
+  status: string;
+  audio_url: string;
+}
+
+// Type guard for AssemblyAI upload response
+function isUploadResponse(response: string | AssemblyAIUploadResponse): response is AssemblyAIUploadResponse {
+  return typeof response === 'object' && 'audio_url' in response;
+}
+
+export async function generateCaptions(
+  audioPath: string,
+  metadata: GenerationMetadata,
+  context: GenerationContext
+): Promise<GenerationResult> {
+  console.log('=== Starting Caption Generation ===');
+  console.log(`📝 Input audio path: "${audioPath}"`);
+
+  const { projectDir, sanitizedTitle, timestamp } = context;
+
+  return withRetry(async () => {
+    try {
+      const apiKey = process.env.DEEPGRAM_API_KEY;
+      if (!apiKey) {
+        throw new Error('DEEPGRAM_API_KEY is not defined');
+      }
+
+      const audioData = await fs.promises.readFile(audioPath);
+
+      const url = new URL('https://api.deepgram.com/v1/listen');
+      url.searchParams.append('model', 'nova-2');
+      url.searchParams.append('smart_format', 'true');
+      url.searchParams.append('punctuate', 'true');
+      url.searchParams.append('diarize', 'false');
+      url.searchParams.append('utterances', 'true');
+      url.searchParams.append('language', 'en');
+
+      const response = await fetch(url.toString(), {
+        method: 'POST',
+        headers: {
+          'Authorization': `Token ${apiKey}`,
+          'Content-Type': 'audio/mp3',
+        },
+        body: audioData
+      });
+
+      if (!response.ok) {
+        throw new Error(`Deepgram API error: ${response.status} ${response.statusText}`);
+      }
+
+      const result = await response.json();
+
+      if (!result.results?.channels?.[0]?.alternatives?.[0]?.words) {
+        throw new Error('No words found in transcription result');
+      }
+
+      // Extract only the words array
+      const words = result.results.channels[0].alternatives[0].words;
+      const transcript = result.results.channels[0].alternatives[0].transcript;
+
+      // Save only the words array
+      const transcriptionPath = path.join(projectDir, 'transcription.json');
+      await fs.promises.writeFile(
+        transcriptionPath,
+        JSON.stringify({ words }, null, 2)
+      );
+
+      console.log('💾 Words data saved to:', transcriptionPath);
+      console.log('=== Caption Generation Complete ===');
+
+      return {
+        text: transcript || '',
+        path: `/generated/${sanitizedTitle}_${timestamp}/transcription.json`,
+        fullPath: transcriptionPath,
+        metadata: {
+          ...metadata,
+          words
+        }
+      };
+    } catch (error) {
+      console.error('❌ Caption generation error:', error);
+      throw error;
+    }
+  }, 3, 5000);
+}
+
 async function withRetry<T>(
   fn: () => Promise<T>,
   maxRetries: number,

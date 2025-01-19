@@ -4,7 +4,7 @@ import { UTFile } from 'uploadthing/server';
 import path from 'path';
 import { LRUCache } from 'lru-cache';
 import { ensureDir, createProjectDirectories } from '@/utils/file';
-import { generateImage, generateAudio, generateScript } from '@/utils/generation';
+import { generateImage, generateAudio, generateScript, generateCaptions } from '@/utils/generation';
 import { combineAudioFiles, createVideoSlideshow, getAudioDuration } from '@/utils/media';
 import { GenerationResult } from '@/types/types';
 import { utapi } from '@/utils/uploadthing';
@@ -72,6 +72,41 @@ async function uploadVideoFile(videoPath: string): Promise<{ data: UploadData; e
   }
 }
 
+// Add new utility functions for uploads
+async function uploadFile(filePath: string, fileName: string): Promise<string> {
+  const buffer = await readFile(filePath);
+  const file = new UTFile([buffer], fileName, {
+    type: path.extname(fileName) === '.mp3' ? 'audio/mp3' : 'image/png',
+    lastModified: Date.now()
+  });
+
+  const uploadResults = await utapi.uploadFiles([file]);
+  const uploadResult = uploadResults[0] as UploadThingResponse<typeof uploadResults[0]>;
+
+  if (!isSuccessfulUpload(uploadResult)) {
+    throw new Error(`Failed to upload file: ${uploadResult.error?.message || 'Unknown error'}`);
+  }
+
+  return uploadResult.data.url;
+}
+
+async function uploadAllAssets(
+  generatedImages: GenerationResult[],
+  combinedAudioPath: string
+): Promise<{ imageUrls: string[], audioUrl: string }> {
+  // Upload all images
+  const imageUrls = await Promise.all(
+    generatedImages.map((image, index) =>
+      uploadFile(image.fullPath, `image-${index}.png`)
+    )
+  );
+
+  // Upload only combined audio
+  const audioUrl = await uploadFile(combinedAudioPath, 'combined_audio.mp3');
+
+  return { imageUrls, audioUrl };
+}
+
 export async function POST(req: Request) {
   try {
     const { title } = await req.json();
@@ -110,7 +145,13 @@ export async function POST(req: Request) {
       narrations.push('No narration provided');
     }
 
-    const context = { imagesDir, audioDir, sanitizedTitle, timestamp };
+    const context = {
+      projectDir,
+      imagesDir,
+      audioDir,
+      sanitizedTitle,
+      timestamp
+    };
     const metadata = {}; // Add any metadata you need to pass
 
     // Generate assets
@@ -135,6 +176,13 @@ export async function POST(req: Request) {
       combinedAudioPath
     );
 
+    // Generate transcripts/captions
+    const captions = await generateCaptions(
+      combinedAudioPath,
+      metadata,
+      context
+    );
+
     const audioLength = await getAudioDuration(combinedAudioPath);
     const videoOutputPath = path.join(videoDir, 'final_video.mp4');
 
@@ -145,31 +193,51 @@ export async function POST(req: Request) {
       audioLength
     );
 
-    // Upload video using typed utility function
+    // Upload all assets first
+    const { imageUrls, audioUrl } = await uploadAllAssets(generatedImages, combinedAudioPath);
+
+    // Upload final video
     const uploadResult = await uploadVideoFile(videoOutputPath);
+
+    // Generate metadata.json with correct URLs
+    const metadataContent = {
+      audioUrl,
+      images: imageUrls,
+      words: captions.metadata.words || []
+    };
+
+    // Save metadata.json
+    const metadataPath = path.join(projectDir, 'metadata.json');
+    await writeFile(metadataPath, JSON.stringify(metadataContent, null, 2));
 
     const response = {
       success: true,
       data: {
         projectDir: `/generated/${sanitizedTitle}_${timestamp}`,
         script,
-        scenes: generatedImages,
-        narrations: [
-          ...generatedAudio.map(audio => ({
-            narration: audio.text,
-            path: `/generated/${sanitizedTitle}_${timestamp}/audio/${path.basename(audio.path)}`
-          })),
-          {
-            narration: 'Combined Audio',
-            path: `/generated/${sanitizedTitle}_${timestamp}/audio/combined_audio.mp3`
-          }
-        ],
+        scenes: generatedImages.map((image, index) => ({
+          ...image,
+          url: imageUrls[index],
+          narration: narrations[index] // Add narration text to each scene
+        })),
+        narrations: narrations.map((narration, index) => ({
+          narration,
+          path: audioUrl, // Use combined audio URL for all narrations
+          startTime: index * (audioLength / narrations.length), // Approximate start time
+          duration: audioLength / narrations.length // Approximate duration per narration
+        })),
+        captions: {
+          path: captions.path,
+          text: captions.text
+        },
         video: uploadResult.data.url,
         metadata: {
+          ...metadataContent,
           timestamp: new Date().toISOString(),
           totalDuration: audioLength,
           durationPerScene: audioLength / generatedImages.length,
-          videoKey: uploadResult.data.key
+          videoKey: uploadResult.data.key,
+          narrations // Add narrations to metadata
         }
       }
     };
