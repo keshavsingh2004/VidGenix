@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
-import { FileVideo, Github, ChevronRight, Wand2, Layers, Mic, Play, Pause, Volume2, VolumeX } from "lucide-react";
+import { FileVideo, Github, ChevronRight, Wand2, Layers, Mic, Play, Pause, Volume2, VolumeX } from 'lucide-react';
 import { UserButton, SignInButton, useUser } from "@clerk/nextjs";
+import { FAQ } from "./FAQ";
 
 export function LandingPage() {
   const { isSignedIn } = useUser();
@@ -83,9 +84,9 @@ export function LandingPage() {
 
       <main className="container mx-auto px-4 py-16">
         <div className="text-center mb-16">
-            <h1 className="text-4xl md:text-6xl font-bold mb-8 bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text leading-tight">
+          <h1 className="text-4xl md:text-6xl font-bold mb-8 bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text leading-tight">
             Transform Text into Engaging Videos
-            </h1>
+          </h1>
           <p className="text-xl text-gray-400 max-w-2xl mx-auto">
             Create professional videos from text in minutes with our AI-powered platform
           </p>
@@ -124,7 +125,7 @@ export function LandingPage() {
           />
         </div>
 
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-4xl mx-auto mb-16">
           <div className="relative aspect-video rounded-lg overflow-hidden">
             <video
               ref={videoRef}
@@ -158,10 +159,11 @@ export function LandingPage() {
                 )}
               </button>
             </div>
-            {/* Center play button */}
-
           </div>
         </div>
+
+        {/* FAQ Section */}
+        <FAQ />
       </main>
 
       <footer className="border-t border-gray-800 mt-16">
@@ -186,3 +188,4 @@ function FeatureCard({ icon, title, description, color }: { icon: React.ReactNod
     </div>
   );
 }
+

@@ -10,23 +10,6 @@
 <p align="center">
 	<!-- default option, no dependency badges. -->
 </p>
-<br>
-
-##  Table of Contents
-
-- [ Overview](#-overview)
-- [ Features](#-features)
-- [ Project Structure](#-project-structure)
-- [ Project Index](#-project-index)
-- [Tech Stack](#-tech-stack)
-- [ Getting Started](#-getting-started)
-  - [ Prerequisites](#-prerequisites)
-  - [ Installation](#-installation)
-  - [ Usage](#-usage)
-- [ Project Roadmap](#-project-roadmap)
-- [ Contributing](#-contributing)
-- [ License](#-license)
-- [ Acknowledgments](#-acknowledgments)
 
 ##  Overview
 
@@ -57,37 +40,6 @@ An AI-powered application that generates video content from text prompts using N
 ### 📱 Responsive UI
 - Built with modern web technologies like **Next.js**, **React**, and **Tailwind CSS**.
 - Fully responsive design for an optimal experience across all devices, from desktops to mobile phones.
-
-##  Project Structure
-
-```sh
-└── VidGenix/
-    ├── README.md
-    ├── components.json
-    ├── middleware.ts
-    ├── next.config.ts
-    ├── package.json
-    ├── pnpm-lock.yaml
-    ├── postcss.config.mjs
-    ├── public
-    │   ├── file.svg
-    │   ├── generated
-    │   ├── globe.svg
-    │   ├── next.svg
-    │   ├── vercel.svg
-    │   └── window.svg
-    ├── src
-    │   ├── app
-    │   ├── components
-    │   ├── hooks
-    │   ├── lib
-    │   ├── types
-    │   └── utils
-    ├── tailwind.config.ts
-    └── tsconfig.json
-```
-
-
 
 ## Tech Stack
 
@@ -133,6 +85,7 @@ CLERK_SECRET_KEY=your_clerk_secret_key
 GROQ_API_KEY=your_groq_api_key
 DEEPGRAM_API_KEY=your_deepgram_api_key
 IMAGE_GENERATION_API_URL=cloudflareworker_url_ai_flux
+UPLOADTHING_TOKEN=your_uploadthings_api_key
 ```
 
 4. Install the project dependencies:
