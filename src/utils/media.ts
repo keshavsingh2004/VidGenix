@@ -35,38 +35,6 @@ function getFfmpegPath(): string {
 const FFMPEG_PATH = getFfmpegPath();
 ffmpeg.setFfmpegPath(FFMPEG_PATH);
 
-export async function combineAudioFiles(audioFiles: string[], outputPath: string): Promise<void> {
-  try {
-    // Verify all input files exist
-    for (const file of audioFiles) {
-      if (!shell.test('-f', file)) {
-        throw new Error(`Input file not found: ${file}`);
-      }
-    }
-
-    const inputFiles = audioFiles.map(file => `-i "${file}"`).join(' ');
-    const filterComplex = audioFiles.map((_, i) => `[${i}:0]`).join('') + `concat=n=${audioFiles.length}:v=0:a=1[out]`;
-    const command = `${FFMPEG_PATH} ${inputFiles} -filter_complex "${filterComplex}" -map "[out]" "${outputPath}"`;
-
-    const { stderr } = await execAsync(command, { shell: '/bin/bash' });
-
-    if (stderr && stderr.toLowerCase().includes('error')) {
-      throw new Error(`FFmpeg error: ${stderr}`);
-    }
-  } catch (error) {
-    console.error('Error combining audio files:', error);
-    if (error instanceof Error) {
-      if (error.message.includes('No such file')) {
-        throw new Error('FFmpeg not found. Please ensure ffmpeg is installed correctly.');
-      }
-      if (error.message.includes('Permission denied')) {
-        throw new Error('FFmpeg permission error. Please check file permissions.');
-      }
-    }
-    throw error;
-  }
-}
-
 export async function createVideoSlideshow(
   imagePaths: string[],
   audioPath: string,

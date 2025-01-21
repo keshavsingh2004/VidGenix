@@ -32,7 +32,7 @@ async function webStreamToNodeStream(webStream: ReadableStream): Promise<Readabl
   });
 }
 
-
+// Remove generatePlaceholderImage function and its dependencies
 
 export function createProjectDirectories(title: string, timestamp: string) {
   const sanitizedTitle = title.replace(/[^a-zA-Z0-9]/g, '_').toLowerCase();
@@ -60,33 +60,45 @@ export async function generateImage(
 
   return withRetry(async () => {
     try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
-
       const response = await fetch(process.env.IMAGE_GENERATION_API_URL!, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'image/png, image/jpeg'
         },
         body: JSON.stringify({
           prompt: scene,
-          steps: 8
+          steps: 8,
+          width: 1024,
+          height: 768,
+          format: 'png'
         }),
-        signal: controller.signal
+        signal: AbortSignal.timeout(45000) // Increased timeout
       });
 
-      clearTimeout(timeoutId);
-
       if (!response.ok) {
-        throw new Error(`Image generation failed: ${response.statusText}`);
+        const errorText = await response.text();
+        console.error('Image generation API error:', {
+          status: response.status,
+          statusText: response.statusText,
+          error: errorText
+        });
+        throw new Error(`Image generation failed: ${errorText || response.statusText}`);
       }
 
-      // Handle binary image data instead of JSON
+      const contentType = response.headers.get('content-type');
+      if (!contentType?.includes('image/')) {
+        throw new Error(`Unexpected content type: ${contentType}`);
+      }
+
       const imageBuffer = await response.arrayBuffer();
+      if (!imageBuffer || imageBuffer.byteLength === 0) {
+        throw new Error('No valid image data received');
+      }
+
       const safeSceneName = scene.slice(0, 50).replace(/[^a-z0-9]/gi, '_');
       const imagePath = path.join(imagesDir, `scene_${safeSceneName}.png`);
 
-      // Write binary data directly to file
       await fs.promises.writeFile(imagePath, Buffer.from(imageBuffer));
 
       console.log(`✅ Generated image for scene: "${scene}"`);
@@ -95,24 +107,13 @@ export async function generateImage(
         path: `/generated/${sanitizedTitle}_${timestamp}/images/scene_${safeSceneName}.png`,
         fullPath: imagePath,
         metadata,
-        text: scene // Add narration text
+        text: scene
       };
     } catch (error) {
-      const isAPIError = (err: unknown): err is APIError => {
-        return err instanceof Error && 'code' in err;
-      };
-
-      if (error instanceof Error) {
-        if (error.name === 'AbortError') {
-          throw new Error('Image generation timed out');
-        }
-        if (isAPIError(error) && error.code === 'ETIMEDOUT') {
-          throw new Error('Network timeout');
-        }
-      }
+      console.error('Image generation error:', error);
       throw error;
     }
-  }, 3, 5000); // 3 retries with 5 second initial delay
+  }, 5, 10000); // Increased retries to 5 and initial delay to 10 seconds
 }
 
 export async function generateAudio(
@@ -120,14 +121,13 @@ export async function generateAudio(
   metadata: GenerationMetadata,
   context: GenerationContext
 ): Promise<GenerationResult> {
-  console.log(`🎵 Generating audio for narration: "${narration}"...`);
+  console.log(`🎵 Generating audio for narration...`);
   const { audioDir, sanitizedTitle, timestamp } = context;
 
   return withRetry(async () => {
     return new Promise((resolve, reject) => {
       try {
-        const safeNarrationName = narration.slice(0, 50).replace(/[^a-z0-9]/gi, '_');
-        const audioPath = path.join(audioDir, `narration_${safeNarrationName}.mp3`);
+        const audioPath = path.join(audioDir, `narration.mp3`);
 
         const options = {
           hostname: 'api.deepgram.com',
@@ -154,10 +154,10 @@ export async function generateAudio(
             try {
               const audioBuffer = Buffer.concat(chunks);
               await fs.promises.writeFile(audioPath, audioBuffer);
-              console.log(`✅ Generated audio for narration: "${narration}"`);
+              console.log(`✅ Generated audio file`);
               resolve({
-                text: narration, // Include the narration text
-                path: `/generated/${sanitizedTitle}_${timestamp}/audio/narration_${safeNarrationName}.mp3`,
+                text: narration,
+                path: `/generated/${sanitizedTitle}_${timestamp}/audio/narration.mp3`,
                 fullPath: audioPath,
                 metadata
               });
@@ -175,7 +175,7 @@ export async function generateAudio(
         reject(error);
       }
     });
-  }, 5, 2000); // 5 retries with 2 second initial delay
+  }, 5, 2000);
 }
 
 export async function generateScript(title: string) {

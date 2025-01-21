@@ -5,7 +5,7 @@ import path from 'path';
 import { LRUCache } from 'lru-cache';
 import { ensureDir, createProjectDirectories } from '@/utils/file';
 import { generateImage, generateAudio, generateScript, generateCaptions } from '@/utils/generation';
-import { combineAudioFiles, createVideoSlideshow, getAudioDuration } from '@/utils/media';
+import { createVideoSlideshow, getAudioDuration } from '@/utils/media';
 import { GenerationResult } from '@/types/types';
 import { utapi } from '@/utils/uploadthing';
 import { UploadFileResponse, UploadData, UploadThingResponse } from '@/types/uploadthing';
@@ -145,6 +145,9 @@ export async function POST(req: Request) {
       narrations.push('No narration provided');
     }
 
+    // Combine all narrations into a single string with proper spacing
+    const fullNarration = narrations.join('. ');
+
     const context = {
       projectDir,
       imagesDir,
@@ -161,48 +164,41 @@ export async function POST(req: Request) {
         metadata,
         context
       ))),
-      Promise.all(narrations.map(narration => generateAudio(
-        narration,
-        metadata,
-        context
-      )))
+      generateAudio(fullNarration, metadata, context)
     ]);
-
-    // Process audio and create video
-    const combinedAudioPath = path.join(audioDir, 'combined_audio.mp3');
-    await combineAudioFiles(
-      generatedAudio.filter((result): result is GenerationResult => result !== null)
-        .map(result => result.fullPath),
-      combinedAudioPath
-    );
 
     // Generate transcripts/captions
     const captions = await generateCaptions(
-      combinedAudioPath,
+      generatedAudio.fullPath,
       metadata,
       context
     );
 
-    const audioLength = await getAudioDuration(combinedAudioPath);
+    const audioLength = await getAudioDuration(generatedAudio.fullPath);
     const videoOutputPath = path.join(videoDir, 'final_video.mp4');
 
     await createVideoSlideshow(
       generatedImages.map(result => result.fullPath),
-      combinedAudioPath,
+      generatedAudio.fullPath,
       videoOutputPath,
       audioLength
     );
 
     // Upload all assets first
-    const { imageUrls, audioUrl } = await uploadAllAssets(generatedImages, combinedAudioPath);
+    const { imageUrls, audioUrl } = await uploadAllAssets(generatedImages, generatedAudio.fullPath);
 
     // Upload final video
     const uploadResult = await uploadVideoFile(videoOutputPath);
 
     // Generate metadata.json with correct URLs
+    const sceneDuration = audioLength / scenes.length;
     const metadataContent = {
       audioUrl,
-      images: imageUrls,
+      images: imageUrls.map((url, index) => ({
+        url,
+        startTime: index * sceneDuration,
+        duration: sceneDuration
+      })),
       words: captions.metadata.words || []
     };
 
@@ -218,14 +214,14 @@ export async function POST(req: Request) {
         scenes: generatedImages.map((image, index) => ({
           ...image,
           url: imageUrls[index],
-          narration: narrations[index] // Add narration text to each scene
+          narration: narrations[index],
+          startTime: index * sceneDuration,
+          duration: sceneDuration
         })),
-        narrations: narrations.map((narration, index) => ({
-          narration,
-          path: audioUrl, // Use combined audio URL for all narrations
-          startTime: index * (audioLength / narrations.length), // Approximate start time
-          duration: audioLength / narrations.length // Approximate duration per narration
-        })),
+        audio: {
+          url: audioUrl,
+          duration: audioLength
+        },
         captions: {
           path: captions.path,
           text: captions.text
@@ -235,9 +231,8 @@ export async function POST(req: Request) {
           ...metadataContent,
           timestamp: new Date().toISOString(),
           totalDuration: audioLength,
-          durationPerScene: audioLength / generatedImages.length,
-          videoKey: uploadResult.data.key,
-          narrations // Add narrations to metadata
+          durationPerScene: sceneDuration,
+          videoKey: uploadResult.data.key
         }
       }
     };

@@ -46,6 +46,10 @@ interface ResponseData {
     narrations: Narration[];
     video: string;
     metadata: Metadata;
+    audio: {  // Add audio type definition
+      url: string;
+      duration: number;
+    };
   };
 }
 
@@ -97,6 +101,7 @@ export function GeneratePage() {
       return;
     }
     setIsLoading(true);
+    setResponseData(null); // Reset previous response
     try {
       console.log("Generation started...");
       const response = await fetch("/api/generate", {
@@ -105,17 +110,20 @@ export function GeneratePage() {
         body: JSON.stringify(formData),
       });
       const data = await response.json();
-      if (data.error?.message?.includes("Invalid API key")) {
-        toast({
-          title: "Error",
-          description: "Invalid API key or Invalid API key/application pair",
-          variant: "destructive",
-        });
-      } else {
-        setResponseData(data);
+      if (!response.ok) {
+        throw new Error(data.details || 'Generation failed');
       }
+      if (data.error) {
+        throw new Error(data.error);
+      }
+      setResponseData(data);
     } catch (error) {
-      console.log("Error:", error);
+      console.error("Error:", error);
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Generation failed",
+        variant: "destructive",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -211,41 +219,48 @@ export function GeneratePage() {
                   </Button>
                 </form>
 
-                {responseData && (
+                {responseData?.data && (
                   <ScrollArea className="h-[calc(100vh-250px)]">
                     <div className="space-y-4 pr-4">
-                      <h3 className="text-lg font-semibold text-gray-300">Script</h3>
-                      <Card className="bg-gray-800 border-gray-700">
-                        <CardContent className="p-4 space-y-2 text-sm text-gray-400">
-                          {responseData.data.script}
-                        </CardContent>
-                      </Card>
+                      {responseData.data.script && (
+                        <>
+                          <h3 className="text-lg font-semibold text-gray-300">Script</h3>
+                          <Card className="bg-gray-800 border-gray-700">
+                            <CardContent className="p-4 space-y-2 text-sm text-gray-400">
+                              {responseData.data.script}
+                            </CardContent>
+                          </Card>
+                        </>
+                      )}
 
-                      <h3 className="text-lg font-semibold text-gray-300">Scenes</h3>
-                      {responseData.data.scenes?.map((scene: Scene, index: number) => (
-                        <Card key={index} className="bg-gray-800 border-gray-700">
-                          <CardContent className="p-4 space-y-2">
-                            <p className="text-sm font-semibold text-gray-300">
-                              Scene {index + 1}: {scene.scene.replace(/^Scene \d+:\s*/, "")}
-                            </p>
-                            <img src={scene.path} alt={`Scene ${index + 1}`} className="rounded" />
-                          </CardContent>
-                        </Card>
-                      ))}
+                      {responseData.data.scenes?.length > 0 && (
+                        <>
+                          <h3 className="text-lg font-semibold text-gray-300">Scenes</h3>
+                          {responseData.data.scenes.map((scene: Scene, index: number) => (
+                            <Card key={index} className="bg-gray-800 border-gray-700">
+                              <CardContent className="p-4 space-y-2">
+                                <p className="text-sm font-semibold text-gray-300">
+                                  Scene {index + 1}: {scene.scene.replace(/^Scene \d+:\s*/, "")}
+                                </p>
+                                <img src={scene.path} alt={`Scene ${index + 1}`} className="rounded" />
+                              </CardContent>
+                            </Card>
+                          ))}
+                        </>
+                      )}
 
-                      <h3 className="text-lg font-semibold text-gray-300">Narrations</h3>
-                      {responseData.data.narrations?.map((narration: Narration, index: number) => (
-                        <Card key={index} className="bg-gray-800 border-gray-700">
-                          <CardContent className="p-4 space-y-2">
-                            <p className="text-sm font-semibold text-gray-300">
-                              Narration {index + 1}: {narration.narration}
-                            </p>
-                            <audio controls src={narration.path} className="w-full">
-                              Your browser does not support the audio tag.
-                            </audio>
-                          </CardContent>
-                        </Card>
-                      ))}
+                      {responseData.data.audio && (
+                        <>
+                          <h3 className="text-lg font-semibold text-gray-300">Audio</h3>
+                          <Card className="bg-gray-800 border-gray-700">
+                            <CardContent className="p-4 space-y-2">
+                              <audio controls src={responseData.data.audio.url} className="w-full">
+                                Your browser does not support the audio tag.
+                              </audio>
+                            </CardContent>
+                          </Card>
+                        </>
+                      )}
                     </div>
                   </ScrollArea>
                 )}

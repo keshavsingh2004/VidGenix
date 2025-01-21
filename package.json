@@ -6,7 +6,9 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "revideo:serve": "revideo serve --projectFile ./revideo/project.ts",
+    "revideo:editor": "revideo editor --projectFile ./revideo/project.ts"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.5.0",
@@ -15,6 +17,12 @@
     "@radix-ui/react-scroll-area": "^1.2.1",
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-toast": "^1.2.2",
+    "@revideo/2d": "^0.10.3",
+    "@revideo/cli": "^0.10.3",
+    "@revideo/core": "^0.10.3",
+    "@revideo/player-react": "^0.10.3",
+    "@revideo/renderer": "^0.10.3",
+    "@revideo/ui": "^0.10.3",
     "@types/lru-cache": "^7.10.10",
     "@types/shelljs": "^0.8.15",
     "@uploadthing/react": "^7.1.5",
