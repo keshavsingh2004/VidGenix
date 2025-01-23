@@ -1,11 +1,9 @@
 import { makeProject } from '@revideo/core';
-
 import './global.css';
+import scene from './scene';
 import metadata from './metadata.json';
 
-import scene from './scene';
-
-export default makeProject({
+const project = makeProject({
   scenes: [scene],
   variables: metadata,
   settings: {
@@ -14,3 +12,5 @@ export default makeProject({
     },
   },
 });
+
+export default project;

@@ -4,11 +4,12 @@ import Groq from "groq-sdk";
 import fs from 'fs';
 import https from 'https';
 import { Readable } from 'stream';
-// Remove these imports
-// import { createClient } from "@deepgram/sdk";
-// import { AssemblyAI } from 'assemblyai';
+import Together, { ClientOptions } from "together-ai";
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+const together = new Together({
+  auth: process.env.TOGETHER_API_KEY
+} as ClientOptions);
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function webStreamToNodeStream(webStream: ReadableStream): Promise<Readable> {
@@ -60,46 +61,25 @@ export async function generateImage(
 
   return withRetry(async () => {
     try {
-      const response = await fetch(process.env.IMAGE_GENERATION_API_URL!, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'image/png, image/jpeg'
-        },
-        body: JSON.stringify({
-          prompt: scene,
-          steps: 8,
-          width: 1024,
-          height: 768,
-          format: 'png'
-        }),
-        signal: AbortSignal.timeout(45000) // Increased timeout
+      const response = await together.images.create({
+        model: "black-forest-labs/FLUX.1-schnell-Free",
+        prompt: scene,
+        width: 1024,
+        height: 768,
+        steps: 1,
+        n: 1,
+        response_format: "base64" // Changed back to "b64_json"
       });
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Image generation API error:', {
-          status: response.status,
-          statusText: response.statusText,
-          error: errorText
-        });
-        throw new Error(`Image generation failed: ${errorText || response.statusText}`);
-      }
-
-      const contentType = response.headers.get('content-type');
-      if (!contentType?.includes('image/')) {
-        throw new Error(`Unexpected content type: ${contentType}`);
-      }
-
-      const imageBuffer = await response.arrayBuffer();
-      if (!imageBuffer || imageBuffer.byteLength === 0) {
+      if (!response.data?.[0]?.b64_json) { // Changed to b64_json
         throw new Error('No valid image data received');
       }
 
+      const imageBuffer = Buffer.from(response.data[0].b64_json, 'base64'); // Changed to b64_json
       const safeSceneName = scene.slice(0, 50).replace(/[^a-z0-9]/gi, '_');
       const imagePath = path.join(imagesDir, `scene_${safeSceneName}.png`);
 
-      await fs.promises.writeFile(imagePath, Buffer.from(imageBuffer));
+      await fs.promises.writeFile(imagePath, imageBuffer);
 
       console.log(`✅ Generated image for scene: "${scene}"`);
       return {
@@ -113,7 +93,7 @@ export async function generateImage(
       console.error('Image generation error:', error);
       throw error;
     }
-  }, 5, 10000); // Increased retries to 5 and initial delay to 10 seconds
+  }, 5, 10000);
 }
 
 export async function generateAudio(

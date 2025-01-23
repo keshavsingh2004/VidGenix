@@ -5,7 +5,6 @@ import path from 'path';
 import { LRUCache } from 'lru-cache';
 import { ensureDir, createProjectDirectories } from '@/utils/file';
 import { generateImage, generateAudio, generateScript, generateCaptions } from '@/utils/generation';
-import { createVideoSlideshow, getAudioDuration } from '@/utils/media';
 import { GenerationResult } from '@/types/types';
 import { utapi } from '@/utils/uploadthing';
 import { UploadFileResponse, UploadData, UploadThingResponse } from '@/types/uploadthing';
@@ -174,66 +173,66 @@ export async function POST(req: Request) {
       context
     );
 
-    const audioLength = await getAudioDuration(generatedAudio.fullPath);
-    const videoOutputPath = path.join(videoDir, 'final_video.mp4');
-
-    await createVideoSlideshow(
-      generatedImages.map(result => result.fullPath),
-      generatedAudio.fullPath,
-      videoOutputPath,
-      audioLength
-    );
-
     // Upload all assets first
     const { imageUrls, audioUrl } = await uploadAllAssets(generatedImages, generatedAudio.fullPath);
 
-    // Upload final video
-    const uploadResult = await uploadVideoFile(videoOutputPath);
-
-    // Generate metadata.json with correct URLs
-    const sceneDuration = audioLength / scenes.length;
+    // Simplified metadata structure
     const metadataContent = {
       audioUrl,
-      images: imageUrls.map((url, index) => ({
-        url,
-        startTime: index * sceneDuration,
-        duration: sceneDuration
-      })),
+      images: imageUrls,
       words: captions.metadata.words || []
     };
 
-    // Save metadata.json
-    const metadataPath = path.join(projectDir, 'metadata.json');
-    await writeFile(metadataPath, JSON.stringify(metadataContent, null, 2));
+    // Send to render service with streamProgress flag
+    const renderBody = {
+      metadata: metadataContent,
+      streamProgress: true
+    };
+
+    console.log('Sending to render service:', renderBody);
+    const renderResponse = await fetch('http://localhost:3000/api/render', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(renderBody)
+    });
+
+    if (!renderResponse.ok) {
+      const errorText = await renderResponse.text();
+      console.error('Render service error:', errorText);
+      throw new Error(`Failed to render video: ${errorText}`);
+    }
+
+    const renderResult = await renderResponse.json();
+    console.log('Render service response:', renderResult);
+
+    if (!renderResult.videoPath) {
+      throw new Error('No video path in render response');
+    }
+
+    // Use the returned video path
+    const videoPath = renderResult.videoPath;
+
+    const uploadResult = await uploadVideoFile(videoPath);
 
     const response = {
       success: true,
       data: {
         projectDir: `/generated/${sanitizedTitle}_${timestamp}`,
         script,
-        scenes: generatedImages.map((image, index) => ({
-          ...image,
-          url: imageUrls[index],
-          narration: narrations[index],
-          startTime: index * sceneDuration,
-          duration: sceneDuration
-        })),
+        metadata: metadataContent,
+        video: uploadResult.data.url,
         audio: {
           url: audioUrl,
-          duration: audioLength
+          duration: 0
         },
-        captions: {
-          path: captions.path,
-          text: captions.text
-        },
-        video: uploadResult.data.url,
-        metadata: {
-          ...metadataContent,
-          timestamp: new Date().toISOString(),
-          totalDuration: audioLength,
-          durationPerScene: sceneDuration,
-          videoKey: uploadResult.data.key
-        }
+        scenes: generatedImages.map((image, index) => ({
+          scene: scenes[index],
+          path: image.path,
+          url: imageUrls[index],
+          narration: narrations[index]
+        }))
       }
     };
 

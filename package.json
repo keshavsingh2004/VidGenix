@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "revideo:serve": "revideo serve --projectFile ./revideo/project.ts",
-    "revideo:editor": "revideo editor --projectFile ./revideo/project.ts"
+    "render-server": "node src/server/render-server.js",
+    "dev:all": "concurrently \"npm run dev\" \"npm run render-server\""
   },
   "dependencies": {
     "@clerk/nextjs": "^6.5.0",
@@ -29,6 +29,8 @@
     "child_process": "^1.0.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
     "fluent-ffmpeg": "^2.1.3",
     "framer-motion": "^11.18.1",
     "groq-sdk": "^0.9.1",
@@ -41,6 +43,7 @@
     "shelljs": "^0.8.5",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",
+    "together-ai": "^0.12.0",
     "uploadthing": "^7.4.4",
     "util": "^0.12.5"
   },
@@ -49,6 +52,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "concurrently": "^9.1.2",
     "eslint": "^8",
     "eslint-config-next": "15.0.3",
     "postcss": "^8",
