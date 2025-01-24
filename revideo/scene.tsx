@@ -1,7 +1,6 @@
 /** @jsxImportSource @revideo/2d/lib */
 import {Audio, Img, makeScene2D, Txt, Rect, Layout} from '@revideo/2d';
 import {all, createRef, waitFor, useScene, Reference, createSignal, makeProject} from '@revideo/core';
-import metadata from './metadata.json';
 import './global.css';
 
 interface Word {
@@ -29,8 +28,8 @@ interface captionSettings {
 }
 
 const textSettings: captionSettings = {
-  fontSize: 80,
-  numSimultaneousWords: 4, // how many words are shown at most simultaneously
+  fontSize: 60,
+  numSimultaneousWords: 3, // how many words are shown at most simultaneously
   textColor: "white",
   fontWeight: 800,
   fontFamily: "Mulish",
@@ -89,17 +88,18 @@ export default makeScene2D('scene', function* (view) {
   )
 });
 
-function* displayImages(container: Reference<Layout>, images: string[], totalDuration: number){
-  for(const img of images){
+function* displayImages(container: Reference<Layout>, images: string[], totalDuration: number) {
+  for (const img of images) {
     const ref = createRef<Img>();
-    container().add(<Img 
-      src={img}
-      size={["100%", "100%"]}
-      ref={ref}
-      zIndex={0}
-    /> 
-    )
-    yield* waitFor(totalDuration/images.length);
+    container().add(
+      <Img
+        src={img}
+        height={"100%"}
+        ref={ref}
+        zIndex={0}
+      />
+    );
+    yield* waitFor(totalDuration / images.length);
   }
 }
 

@@ -4,12 +4,9 @@ import Groq from "groq-sdk";
 import fs from 'fs';
 import https from 'https';
 import { Readable } from 'stream';
-import Together, { ClientOptions } from "together-ai";
 
+// Remove Together AI import and client initialization
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
-const together = new Together({
-  auth: process.env.TOGETHER_API_KEY
-} as ClientOptions);
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function webStreamToNodeStream(webStream: ReadableStream): Promise<Readable> {
@@ -59,23 +56,52 @@ export async function generateImage(
   console.log(`🎨 Generating image for scene: "${scene}"...`);
   const { imagesDir, sanitizedTitle, timestamp } = context;
 
+  // Get an optimized prompt from GROQ first
+  const optimizedPrompt = await groq.chat.completions.create({
+    messages: [
+      {
+        role: "system",
+        content: "You are an expert at writing clear, detailed image generation prompts. Convert scene descriptions into specific, visually descriptive prompts that are family-friendly and educational. Never include any text, words, letters, numbers, or writing in the image description."
+      },
+      {
+        role: "user",
+        content: `Convert this scene description into a clear, detailed image generation prompt (max 2048 chars). Focus on visual details, style, lighting, and composition. The image must not contain any text, words, letters, numbers or writing. Keep it family-friendly and educational: "${scene}"`
+      }
+    ],
+    model: "llama-3.3-70b-versatile",
+    temperature: 0.7,
+    top_p: 0.8,
+  });
+
+  const enhancedPrompt = optimizedPrompt.choices[0]?.message?.content || scene;
+
   return withRetry(async () => {
     try {
-      const response = await together.images.create({
-        model: "black-forest-labs/FLUX.1-schnell-Free",
-        prompt: scene,
-        width: 1024,
-        height: 768,
-        steps: 1,
-        n: 1,
-        response_format: "base64" // Changed back to "b64_json"
-      });
+      const response = await fetch(
+        `https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ACCOUNT_ID}/ai/run/@cf/black-forest-labs/flux-1-schnell`,
+        {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${process.env.CLOUDFLARE_API_TOKEN}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            prompt: enhancedPrompt,
+            steps: 8 // Using maximum steps for best quality
+          })
+        }
+      );
 
-      if (!response.data?.[0]?.b64_json) { // Changed to b64_json
+      if (!response.ok) {
+        throw new Error(`Cloudflare API error: ${response.status} ${response.statusText}`);
+      }
+
+      const result = await response.json();
+      if (!result.result?.image) {
         throw new Error('No valid image data received');
       }
 
-      const imageBuffer = Buffer.from(response.data[0].b64_json, 'base64'); // Changed to b64_json
+      const imageBuffer = Buffer.from(result.result.image, 'base64');
       const safeSceneName = scene.slice(0, 50).replace(/[^a-z0-9]/gi, '_');
       const imagePath = path.join(imagesDir, `scene_${safeSceneName}.png`);
 

@@ -222,16 +222,6 @@ export function GeneratePage() {
                 {responseData?.data && (
                   <ScrollArea className="h-[calc(100vh-250px)]">
                     <div className="space-y-4 pr-4">
-                      {responseData.data.script && (
-                        <>
-                          <h3 className="text-lg font-semibold text-gray-300">Script</h3>
-                          <Card className="bg-gray-800 border-gray-700">
-                            <CardContent className="p-4 space-y-2 text-sm text-gray-400">
-                              {responseData.data.script}
-                            </CardContent>
-                          </Card>
-                        </>
-                      )}
 
                       {responseData.data.scenes?.length > 0 && (
                         <>
@@ -275,7 +265,7 @@ export function GeneratePage() {
               <AnimatedLoadingWait />
             ) : (
               responseData?.data?.video && (
-                <div className="w-full aspect-video rounded-lg overflow-hidden bg-gray-800">
+                <div className="w-auto max-h-[80vh] aspect-[9/16] rounded-lg overflow-hidden bg-gray-800">
                   <video
                     controls
                     autoPlay
