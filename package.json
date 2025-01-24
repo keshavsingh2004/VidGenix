@@ -5,10 +5,10 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
-    "start": "next start",
+    "start":"concurrently \"next start\" \"pnpm run render-server\"",
     "lint": "next lint",
-    "render-server": "node src/server/render-server.js",
-    "dev:all": "concurrently \"npm run dev\" \"npm run render-server\""
+    "render-server": "ts-node -P tsconfig.server.json src/server/render-server.ts",
+    "dev:all": "concurrently \"pnpm run dev\" \"pnpm run render-server\""
   },
   "dependencies": {
     "@clerk/nextjs": "^6.5.0",
@@ -48,6 +48,8 @@
     "util": "^0.12.5"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
     "@types/fluent-ffmpeg": "^2.1.27",
     "@types/node": "^20",
     "@types/react": "^18",
@@ -57,7 +59,8 @@
     "eslint-config-next": "15.0.3",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "typescript": "^5",
+    "ts-node": "^10.9.2"
   },
   "packageManager": "pnpm@9.14.2+sha512.6e2baf77d06b9362294152c851c4f278ede37ab1eba3a55fda317a4a17b209f4dbb973fb250a77abc463a341fcb1f17f17cfa24091c4eb319cda0d9b84278387"
 }

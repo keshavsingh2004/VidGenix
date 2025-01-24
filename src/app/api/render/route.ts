@@ -2,14 +2,24 @@ import { NextResponse } from 'next/server';
 import fs from 'fs/promises';
 import path from 'path';
 
-async function updateMetadata(newMetadata: any) {
+interface RenderMetadata {
+  audioPath: string;
+  imagePaths: string[];
+  words: Array<{
+    text: string;
+    start: number;
+    end: number;
+  }>;
+}
+
+async function updateMetadata(newMetadata: RenderMetadata) {
   try {
     const metadataPath = path.join(process.cwd(), 'revideo', 'metadata.json');
 
     // Remove existing metadata.json if it exists
     try {
       await fs.unlink(metadataPath);
-    } catch (error) {
+    } catch {
       // Ignore error if file doesn't exist
     }
 
@@ -32,9 +42,12 @@ async function updateMetadata(newMetadata: any) {
   }
 }
 
-async function renderVideo(metadata: any): Promise<string> {
+async function renderVideo(metadata: RenderMetadata): Promise<string> {
   try {
-    const response = await fetch('http://localhost:4000/render', {
+    // Use environment variable for render server URL with fallback to localhost
+    const renderServerUrl = process.env.RENDER_SERVER_URL || 'http://localhost:4000';
+
+    const response = await fetch(`${renderServerUrl}/render`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

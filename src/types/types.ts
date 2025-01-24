@@ -18,7 +18,7 @@ export interface GenerationMetadata {
   audioUrl?: string;
   images?: string[];
   words?: Word[];
-  [key: string]: string | number | boolean | null | undefined | Record<string, unknown> | Array<any>;
+  [key: string]: string | number | boolean | null | undefined | Record<string, unknown> | unknown[];
 }
 
 export interface APIError {

@@ -7,14 +7,12 @@ const AnimatedLoadingWait = () => {
     const foodItems = ["🎥", "🎬", "🖥️", "🎶", "🎙️", "🖼️","🚀","📸","🖌️","🎧","🎨"]
 
     useEffect(() => {
-        const foodInterval = setInterval(() => {
-            setFoodIndex((prev) => (prev + 1) % foodItems.length)
-        }, 1500)
+        const interval = setInterval(() => {
+            setFoodIndex((prevIndex) => (prevIndex + 1) % foodItems.length)
+        }, 2000)
 
-        return () => {
-            clearInterval(foodInterval)
-        }
-    }, [])
+        return () => clearInterval(interval)
+    }, [foodItems.length])
 
     return (
         <div className="relative flex flex-col items-center justify-center min-h-[200px] sm:min-h-[250px] md:min-h-[300px] p-4 sm:p-8 md:p-12 overflow-hidden">

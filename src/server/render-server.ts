@@ -1,17 +1,26 @@
-// /server/render-server.js
-const express = require('express');
-const { renderVideo } = require('@revideo/renderer');
-const path = require('path');
-const cors = require('cors');
+import express from 'express';
+import { renderVideo } from '@revideo/renderer';
+import path from 'path';
+import cors from 'cors';
+
+interface RenderRequest {
+  metadata: {
+    [key: string]: unknown;
+  };
+}
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.post('/render', async (req, res) => {
+// Fix express route handler types
+app.post('/render', async (
+  req: express.Request<unknown, unknown, RenderRequest>,
+  res: express.Response
+) => {
   try {
     const { metadata } = req.body;
-    const outFile = `video-${Date.now()}.mp4`;
+    const outFile = `video-${Date.now()}.mp4` as const;
 
     console.log('Starting render...');
     const videoPath = await renderVideo({
@@ -33,13 +42,16 @@ app.post('/render', async (req, res) => {
 
     console.log('Render complete:', videoPath);
     res.json({ success: true, videoPath });
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Render error:', error);
-    res.status(500).json({ error: error.message });
+    res.status(500).json({
+      error: error instanceof Error ? error.message : 'Unknown error'
+    });
   }
 });
 
-const port = process.env.RENDER_PORT || 4000;
+// Fix port handling
+const port = Number(process.env.RENDER_PORT) || 4000;
 app.listen(port, () => {
   console.log(`Render server listening on port ${port}`);
 });

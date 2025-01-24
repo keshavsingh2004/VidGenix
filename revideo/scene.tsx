@@ -49,7 +49,7 @@ const textSettings: captionSettings = {
 export default makeScene2D('scene', function* (view) {
   const images = useScene().variables.get('images', [])();
   const audioUrl = useScene().variables.get('audioUrl', 'none')();
-  const words = useScene().variables.get('words', [])();
+  const words = useScene().variables.get<Word[]>('words', [])();
 
   const duration = words[words.length-1].end + 0.5;
 
@@ -202,7 +202,13 @@ function* displayWords(container: Reference<Layout>, words: Word[], settings: ca
   }
 }
 
-function* highlightCurrentWord(container: Reference<Layout>, currentBatch: Word[], wordRefs: Reference<Txt>[], wordColor: string, backgroundColor: string){
+function* highlightCurrentWord(
+  container: Reference<Layout>,
+  currentBatch: Word[],
+  wordRefs: Reference<Txt>[],
+  wordColor?: string,
+  backgroundColor?: string
+) {
   let nextWordStart = 0;
 
   for(let i = 0; i < currentBatch.length; i++){
