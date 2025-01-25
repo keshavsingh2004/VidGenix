@@ -190,7 +190,8 @@ export async function POST(req: Request) {
     };
 
     console.log('Sending to render service:', renderBody);
-    const renderResponse = await fetch(`${process.env.URL}/api/render`, {
+    const Url = process.env.URL || 'http://localhost:3000';
+    const renderResponse = await fetch(`${Url}/api/render`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
