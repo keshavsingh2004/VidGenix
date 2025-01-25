@@ -1,8 +1,10 @@
 [phases.setup]
 nixPkgs = [
+    "nodejs_20",
+    "npm",
     "ffmpeg-full",
     "x264",
-    "x265", 
+    "x265",
     "fdk_aac",
     "chromium",
     "glibc",
@@ -18,18 +20,16 @@ nixPkgs = [
     "dbus",
     "gtk3",
     "pango",
-    "cairo",
-    "alsa-lib",
-    "xorg.libX11",
-    "xorg.libXcomposite",
-    "xorg.libXdamage",
-    "xorg.libXext",
-    "xorg.libXfixes",
-    "xorg.libXrandr",
-    "xorg.libxcb"
+    "cairo"
 ]
 
 [phases.setup.env]
 PUPPETEER_SKIP_CHROMIUM_DOWNLOAD = "true"
 CHROME_BIN = "/nix/store/chromium-unwrapped/bin/chromium"
 PUPPETEER_EXECUTABLE_PATH = "/nix/store/chromium-unwrapped/bin/chromium"
+
+[phases.build]
+resourceLimits = { memory = "3500M", swap = "1G" }
+
+[phases.install]
+cmds = ["npm install -g corepack@0.24.1", "corepack enable"]
