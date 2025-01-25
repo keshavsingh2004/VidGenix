@@ -11,7 +11,11 @@ interface RenderRequest {
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: process.env.URL || 'http://localhost:3000',
+  methods: ['POST'],
+  allowedHeaders: ['Content-Type']
+}));
 
 // Fix express route handler types
 app.post('/render', async (

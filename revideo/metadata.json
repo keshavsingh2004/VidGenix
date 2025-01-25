@@ -1,1075 +1,963 @@
 {
-  "audioUrl": "https://utfs.io/f/Gv2JxtlSEriPaO0ww8gCi4nZamv51wNO2yxQRc8Hl7kFqBIU",
+  "audioUrl": "https://utfs.io/f/Gv2JxtlSEriPdGvgfWm4BviyXHhL6DCU7PQJtmObnsxZaquf",
   "images": [
-    "https://utfs.io/f/Gv2JxtlSEriP8YuNFTBKmnUPEvDLXBsMAkNzqfxFltCWQZSa",
-    "https://utfs.io/f/Gv2JxtlSEriPvCZdAjfFQJImuDgl3L5yxsdNqjX48f9WCT6M",
-    "https://utfs.io/f/Gv2JxtlSEriPT0WHV3OpRZd04lugh9x872HetbEmnPQovVfB",
-    "https://utfs.io/f/Gv2JxtlSEriPE9JNlopP4xeywgSiBs7LNlHf6UVz8coDGXpZ"
+    "https://utfs.io/f/Gv2JxtlSEriPsXbbiVQDIhG9TSgNWDL1Epn48PBvC0J2jZkU",
+    "https://utfs.io/f/Gv2JxtlSEriPWGh1WgZ1oWnbPDqRVGSAl8ud4Kap2YE7Fmer",
+    "https://utfs.io/f/Gv2JxtlSEriPOVI2s8cRY0BfuPoL3NhqvnkUmA8j4VK756ai",
+    "https://utfs.io/f/Gv2JxtlSEriPQxSiIcAMDKVuLdAoEecR2t0y7vb1lXpjZsQY"
   ],
   "words": [
     {
-      "word": "meet",
+      "word": "welcome",
       "start": 0.16,
-      "end": 0.39999998,
-      "confidence": 0.98402786,
-      "punctuated_word": "Meet"
-    },
-    {
-      "word": "elon",
-      "start": 0.39999998,
-      "end": 0.71999997,
-      "confidence": 0.99407566,
-      "punctuated_word": "Elon"
-    },
-    {
-      "word": "musk",
-      "start": 0.71999997,
-      "end": 1.04,
-      "confidence": 0.9888436,
-      "punctuated_word": "Musk,"
-    },
-    {
-      "word": "a",
-      "start": 1.04,
-      "end": 1.1999999,
-      "confidence": 0.99682873,
-      "punctuated_word": "a"
-    },
-    {
-      "word": "visionary",
-      "start": 1.1999999,
-      "end": 1.6999999,
-      "confidence": 0.99561924,
-      "punctuated_word": "visionary"
-    },
-    {
-      "word": "entrepreneur",
-      "start": 1.8399999,
-      "end": 2.34,
-      "confidence": 0.98802906,
-      "punctuated_word": "entrepreneur"
-    },
-    {
-      "word": "and",
-      "start": 2.3999999,
-      "end": 2.6399999,
-      "confidence": 0.97083783,
-      "punctuated_word": "and"
-    },
-    {
-      "word": "innovator",
-      "start": 2.6399999,
-      "end": 3.1399999,
-      "confidence": 0.9993764,
-      "punctuated_word": "innovator"
-    },
-    {
-      "word": "who",
-      "start": 3.1999998,
-      "end": 3.36,
-      "confidence": 0.9400568,
-      "punctuated_word": "who"
-    },
-    {
-      "word": "has",
-      "start": 3.36,
-      "end": 3.6799998,
-      "confidence": 0.9998442,
-      "punctuated_word": "has"
-    },
-    {
-      "word": "revolutionized",
-      "start": 3.6799998,
-      "end": 4.18,
-      "confidence": 0.99797153,
-      "punctuated_word": "revolutionized"
-    },
-    {
-      "word": "multiple",
-      "start": 4.4,
-      "end": 4.9,
-      "confidence": 0.99907255,
-      "punctuated_word": "multiple"
-    },
-    {
-      "word": "industries",
-      "start": 5.04,
-      "end": 5.54,
-      "confidence": 0.99009866,
-      "punctuated_word": "industries"
-    },
-    {
-      "word": "from",
-      "start": 5.68,
-      "end": 6,
-      "confidence": 0.97894806,
-      "punctuated_word": "from"
-    },
-    {
-      "word": "space",
-      "start": 6,
-      "end": 6.48,
-      "confidence": 0.9717836,
-      "punctuated_word": "space"
-    },
-    {
-      "word": "exploration",
-      "start": 6.48,
-      "end": 6.98,
-      "confidence": 0.9931195,
-      "punctuated_word": "exploration"
+      "end": 0.32,
+      "confidence": 0.99939096,
+      "punctuated_word": "Welcome"
     },
     {
       "word": "to",
-      "start": 7.12,
-      "end": 7.3599997,
-      "confidence": 0.99926656,
+      "start": 0.32,
+      "end": 0.48,
+      "confidence": 0.9998178,
       "punctuated_word": "to"
     },
     {
-      "word": "electric",
-      "start": 7.3599997,
-      "end": 7.8599997,
-      "confidence": 0.99485874,
-      "punctuated_word": "electric"
+      "word": "the",
+      "start": 0.48,
+      "end": 0.71999997,
+      "confidence": 0.9998776,
+      "punctuated_word": "the"
     },
     {
-      "word": "cars",
-      "start": 8,
-      "end": 8.32,
-      "confidence": 0.83386105,
-      "punctuated_word": "cars,"
+      "word": "world",
+      "start": 0.71999997,
+      "end": 0.96,
+      "confidence": 0.99527377,
+      "punctuated_word": "world"
     },
     {
-      "word": "and",
-      "start": 8.32,
-      "end": 8.48,
-      "confidence": 0.9996008,
-      "punctuated_word": "and"
+      "word": "of",
+      "start": 0.96,
+      "end": 1.1999999,
+      "confidence": 0.99956554,
+      "punctuated_word": "of"
     },
     {
-      "word": "his",
-      "start": 8.48,
-      "end": 8.72,
-      "confidence": 0.9997068,
-      "punctuated_word": "his"
-    },
-    {
-      "word": "journey",
-      "start": 8.72,
-      "end": 9.12,
-      "confidence": 0.9999218,
-      "punctuated_word": "journey"
-    },
-    {
-      "word": "began",
-      "start": 9.12,
-      "end": 9.44,
-      "confidence": 0.99984,
-      "punctuated_word": "began"
-    },
-    {
-      "word": "in",
-      "start": 9.44,
-      "end": 9.679999,
-      "confidence": 0.99988055,
-      "punctuated_word": "in"
-    },
-    {
-      "word": "south",
-      "start": 9.679999,
-      "end": 10.08,
-      "confidence": 0.9992404,
-      "punctuated_word": "South"
-    },
-    {
-      "word": "africa",
-      "start": 10.08,
-      "end": 10.58,
-      "confidence": 0.99989533,
-      "punctuated_word": "Africa"
+      "word": "soccer",
+      "start": 1.1999999,
+      "end": 1.5999999,
+      "confidence": 0.99815136,
+      "punctuated_word": "soccer"
     },
     {
       "word": "where",
-      "start": 10.639999,
-      "end": 10.88,
-      "confidence": 0.9110116,
+      "start": 1.5999999,
+      "end": 1.8399999,
+      "confidence": 0.8824031,
       "punctuated_word": "where"
     },
     {
-      "word": "he",
-      "start": 10.88,
-      "end": 11.04,
-      "confidence": 0.99992454,
-      "punctuated_word": "he"
-    },
-    {
-      "word": "was",
-      "start": 11.04,
-      "end": 11.54,
-      "confidence": 0.9999168,
-      "punctuated_word": "was"
-    },
-    {
-      "word": "born",
-      "start": 11.84,
-      "end": 12.16,
-      "confidence": 0.99967325,
-      "punctuated_word": "born"
-    },
-    {
-      "word": "and",
-      "start": 12.16,
-      "end": 12.32,
-      "confidence": 0.9991984,
-      "punctuated_word": "and"
-    },
-    {
-      "word": "raised",
-      "start": 12.32,
-      "end": 12.82,
-      "confidence": 0.99804854,
-      "punctuated_word": "raised"
-    },
-    {
-      "word": "as",
-      "start": 13.325,
-      "end": 13.485,
-      "confidence": 0.99782133,
-      "punctuated_word": "as"
-    },
-    {
-      "word": "the",
-      "start": 13.485,
-      "end": 13.645,
-      "confidence": 0.9997044,
-      "punctuated_word": "the"
-    },
-    {
-      "word": "founder",
-      "start": 13.645,
-      "end": 13.965,
-      "confidence": 0.99661934,
-      "punctuated_word": "founder"
+      "word": "one",
+      "start": 1.8399999,
+      "end": 2.08,
+      "confidence": 0.96662027,
+      "punctuated_word": "one"
     },
     {
       "word": "of",
-      "start": 13.965,
-      "end": 14.205,
-      "confidence": 0.9996762,
+      "start": 2.08,
+      "end": 2.1599998,
+      "confidence": 0.9999007,
       "punctuated_word": "of"
     },
     {
-      "word": "spacex",
-      "start": 14.205,
-      "end": 14.705,
-      "confidence": 0.8019766,
-      "punctuated_word": "SpaceX."
+      "word": "the",
+      "start": 2.1599998,
+      "end": 2.32,
+      "confidence": 0.9996538,
+      "punctuated_word": "the"
     },
     {
-      "word": "elon",
-      "start": 15.005,
-      "end": 15.405,
-      "confidence": 0.9853968,
-      "punctuated_word": "Elon"
+      "word": "greatest",
+      "start": 2.32,
+      "end": 2.6399999,
+      "confidence": 0.99979466,
+      "punctuated_word": "greatest"
     },
     {
-      "word": "musk",
-      "start": 15.405,
-      "end": 15.725,
-      "confidence": 0.98323315,
-      "punctuated_word": "Musk"
+      "word": "players",
+      "start": 2.6399999,
+      "end": 3.04,
+      "confidence": 0.9989266,
+      "punctuated_word": "players"
+    },
+    {
+      "word": "of",
+      "start": 3.04,
+      "end": 3.1999998,
+      "confidence": 0.9998945,
+      "punctuated_word": "of"
+    },
+    {
+      "word": "all",
+      "start": 3.1999998,
+      "end": 3.4399998,
+      "confidence": 0.9996001,
+      "punctuated_word": "all"
+    },
+    {
+      "word": "time",
+      "start": 3.4399998,
+      "end": 3.9399998,
+      "confidence": 0.94520164,
+      "punctuated_word": "time,"
+    },
+    {
+      "word": "cristiano",
+      "start": 4.08,
+      "end": 4.58,
+      "confidence": 0.993696,
+      "punctuated_word": "Cristiano"
+    },
+    {
+      "word": "ronaldo",
+      "start": 4.72,
+      "end": 5.22,
+      "confidence": 0.8980274,
+      "punctuated_word": "Ronaldo,"
     },
     {
       "word": "has",
-      "start": 15.725,
-      "end": 15.885,
-      "confidence": 0.9971084,
-      "punctuated_word": "has"
-    },
-    {
-      "word": "been",
-      "start": 15.885,
-      "end": 16.045,
-      "confidence": 0.9997904,
-      "punctuated_word": "been"
-    },
-    {
-      "word": "at",
-      "start": 16.045,
-      "end": 16.205,
-      "confidence": 0.99823004,
-      "punctuated_word": "at"
-    },
-    {
-      "word": "the",
-      "start": 16.205,
-      "end": 16.365,
-      "confidence": 0.9995334,
-      "punctuated_word": "the"
-    },
-    {
-      "word": "forefront",
-      "start": 16.365,
-      "end": 16.865,
-      "confidence": 0.99822253,
-      "punctuated_word": "forefront"
-    },
-    {
-      "word": "of",
-      "start": 16.925,
-      "end": 17.165,
-      "confidence": 0.99976164,
-      "punctuated_word": "of"
-    },
-    {
-      "word": "private",
-      "start": 17.165,
-      "end": 17.645,
-      "confidence": 0.9900102,
-      "punctuated_word": "private"
-    },
-    {
-      "word": "space",
-      "start": 17.645,
-      "end": 18.045,
-      "confidence": 0.9666589,
-      "punctuated_word": "space"
-    },
-    {
-      "word": "exploration",
-      "start": 18.045,
-      "end": 18.545,
-      "confidence": 0.9925412,
-      "punctuated_word": "exploration"
-    },
-    {
-      "word": "aiming",
-      "start": 18.925,
-      "end": 19.244999,
-      "confidence": 0.85316974,
-      "punctuated_word": "aiming"
-    },
-    {
-      "word": "to",
-      "start": 19.244999,
-      "end": 19.485,
-      "confidence": 0.99975246,
-      "punctuated_word": "to"
-    },
-    {
-      "word": "reduce",
-      "start": 19.485,
-      "end": 19.805,
-      "confidence": 0.9995396,
-      "punctuated_word": "reduce"
-    },
-    {
-      "word": "space",
-      "start": 19.805,
-      "end": 20.305,
-      "confidence": 0.9952951,
-      "punctuated_word": "space"
-    },
-    {
-      "word": "transportation",
-      "start": 20.365,
-      "end": 20.865,
-      "confidence": 0.9724377,
-      "punctuated_word": "transportation"
-    },
-    {
-      "word": "costs",
-      "start": 21.165,
-      "end": 21.485,
-      "confidence": 0.98853123,
-      "punctuated_word": "costs"
-    },
-    {
-      "word": "and",
-      "start": 21.485,
-      "end": 21.725,
-      "confidence": 0.9868771,
-      "punctuated_word": "and"
-    },
-    {
-      "word": "enable",
-      "start": 21.725,
-      "end": 22.125,
-      "confidence": 0.9896499,
-      "punctuated_word": "enable"
-    },
-    {
-      "word": "the",
-      "start": 22.125,
-      "end": 22.285,
-      "confidence": 0.9898009,
-      "punctuated_word": "the"
-    },
-    {
-      "word": "colonization",
-      "start": 22.285,
-      "end": 22.785,
-      "confidence": 0.9984914,
-      "punctuated_word": "colonization"
-    },
-    {
-      "word": "of",
-      "start": 23.085,
-      "end": 23.244999,
-      "confidence": 0.99982077,
-      "punctuated_word": "of"
-    },
-    {
-      "word": "mars",
-      "start": 23.244999,
-      "end": 23.645,
-      "confidence": 0.9632875,
-      "punctuated_word": "Mars"
-    },
-    {
-      "word": "with",
-      "start": 23.645,
-      "end": 23.965,
-      "confidence": 0.99703586,
-      "punctuated_word": "with"
-    },
-    {
-      "word": "remarkable",
-      "start": 23.965,
-      "end": 24.465,
-      "confidence": 0.9995968,
-      "punctuated_word": "remarkable"
-    },
-    {
-      "word": "successes",
-      "start": 24.525,
-      "end": 25.005001,
-      "confidence": 0.99862325,
-      "punctuated_word": "successes"
-    },
-    {
-      "word": "like",
-      "start": 25.005001,
-      "end": 25.325,
-      "confidence": 0.871678,
-      "punctuated_word": "like"
-    },
-    {
-      "word": "reusable",
-      "start": 25.325,
-      "end": 25.825,
-      "confidence": 0.9957339,
-      "punctuated_word": "reusable"
-    },
-    {
-      "word": "rockets",
-      "start": 25.885,
-      "end": 26.385,
-      "confidence": 0.9464594,
-      "punctuated_word": "rockets,"
-    },
-    {
-      "word": "record",
-      "start": 26.445,
-      "end": 26.845001,
-      "confidence": 0.998359,
-      "punctuated_word": "record"
-    },
-    {
-      "word": "breaking",
-      "start": 26.845001,
-      "end": 27.244999,
-      "confidence": 0.9963961,
-      "punctuated_word": "breaking"
-    },
-    {
-      "word": "launches",
-      "start": 27.244999,
-      "end": 27.744999,
-      "confidence": 0.99732697,
-      "punctuated_word": "launches."
-    },
-    {
-      "word": "elon",
-      "start": 28.529999,
-      "end": 28.929998,
-      "confidence": 0.99659914,
-      "punctuated_word": "Elon"
-    },
-    {
-      "word": "musk",
-      "start": 28.929998,
-      "end": 29.17,
-      "confidence": 0.98963165,
-      "punctuated_word": "Musk"
-    },
-    {
-      "word": "is",
-      "start": 29.17,
-      "end": 29.41,
-      "confidence": 0.9977264,
-      "punctuated_word": "is"
-    },
-    {
-      "word": "also",
-      "start": 29.41,
-      "end": 29.65,
-      "confidence": 0.99947065,
-      "punctuated_word": "also"
-    },
-    {
-      "word": "the",
-      "start": 29.65,
-      "end": 29.89,
-      "confidence": 0.9995122,
-      "punctuated_word": "the"
-    },
-    {
-      "word": "eo",
-      "start": 29.89,
-      "end": 30.289999,
-      "confidence": 0.74980235,
-      "punctuated_word": "EO"
-    },
-    {
-      "word": "of",
-      "start": 30.289999,
-      "end": 30.449999,
-      "confidence": 0.9967693,
-      "punctuated_word": "of"
-    },
-    {
-      "word": "a",
-      "start": 30.449999,
-      "end": 30.609999,
-      "confidence": 0.68398356,
-      "punctuated_word": "a"
-    },
-    {
-      "word": "tesla",
-      "start": 30.609999,
-      "end": 31.109999,
-      "confidence": 0.98171955,
-      "punctuated_word": "Tesla,"
-    },
-    {
-      "word": "a",
-      "start": 31.169998,
-      "end": 31.33,
-      "confidence": 0.99687386,
-      "punctuated_word": "a"
-    },
-    {
-      "word": "pioneering",
-      "start": 31.33,
-      "end": 31.83,
-      "confidence": 0.99838173,
-      "punctuated_word": "pioneering"
-    },
-    {
-      "word": "electric",
-      "start": 31.97,
-      "end": 32.37,
-      "confidence": 0.99397296,
-      "punctuated_word": "electric"
-    },
-    {
-      "word": "vehicle",
-      "start": 32.37,
-      "end": 32.87,
-      "confidence": 0.99801105,
-      "punctuated_word": "vehicle"
-    },
-    {
-      "word": "manufacturer",
-      "start": 33.01,
-      "end": 33.51,
-      "confidence": 0.9986173,
-      "punctuated_word": "manufacturer"
-    },
-    {
-      "word": "that",
-      "start": 33.73,
-      "end": 33.97,
-      "confidence": 0.99225533,
-      "punctuated_word": "that"
-    },
-    {
-      "word": "has",
-      "start": 33.97,
-      "end": 34.47,
-      "confidence": 0.99973243,
+      "start": 5.3599997,
+      "end": 5.52,
+      "confidence": 0.999579,
       "punctuated_word": "has"
     },
     {
       "word": "made",
-      "start": 34.69,
-      "end": 35.01,
-      "confidence": 0.9992741,
+      "start": 5.52,
+      "end": 5.7599998,
+      "confidence": 0.99990904,
       "punctuated_word": "made"
     },
     {
-      "word": "sustainable",
-      "start": 35.01,
-      "end": 35.51,
-      "confidence": 0.9995901,
-      "punctuated_word": "sustainable"
-    },
-    {
-      "word": "energy",
-      "start": 35.649998,
-      "end": 36.129997,
-      "confidence": 0.99863404,
-      "punctuated_word": "energy"
-    },
-    {
-      "word": "and",
-      "start": 36.129997,
-      "end": 36.37,
-      "confidence": 0.9977696,
-      "punctuated_word": "and"
-    },
-    {
-      "word": "transportation",
-      "start": 36.37,
-      "end": 36.87,
-      "confidence": 0.9936405,
-      "punctuated_word": "transportation"
-    },
-    {
-      "word": "more",
-      "start": 37.17,
-      "end": 37.41,
-      "confidence": 0.9970553,
-      "punctuated_word": "more"
-    },
-    {
-      "word": "accessible",
-      "start": 37.41,
-      "end": 37.89,
-      "confidence": 0.9993376,
-      "punctuated_word": "accessible"
-    },
-    {
-      "word": "and",
-      "start": 37.89,
-      "end": 38.129997,
-      "confidence": 0.99734,
-      "punctuated_word": "and"
-    },
-    {
-      "word": "affordable",
-      "start": 38.129997,
-      "end": 38.629997,
-      "confidence": 0.99812084,
-      "punctuated_word": "affordable"
-    },
-    {
-      "word": "with",
-      "start": 38.93,
-      "end": 39.17,
-      "confidence": 0.97553533,
-      "punctuated_word": "with"
-    },
-    {
-      "word": "innovative",
-      "start": 39.17,
-      "end": 39.67,
-      "confidence": 0.9994199,
-      "punctuated_word": "innovative"
-    },
-    {
-      "word": "products",
-      "start": 39.809998,
-      "end": 40.21,
-      "confidence": 0.9991805,
-      "punctuated_word": "products"
-    },
-    {
-      "word": "like",
-      "start": 40.21,
-      "end": 40.37,
-      "confidence": 0.8643343,
-      "punctuated_word": "like"
-    },
-    {
-      "word": "the",
-      "start": 40.37,
-      "end": 40.53,
-      "confidence": 0.9987319,
-      "punctuated_word": "the"
-    },
-    {
-      "word": "model",
-      "start": 40.53,
-      "end": 40.93,
-      "confidence": 0.9101919,
-      "punctuated_word": "model"
-    },
-    {
-      "word": "s",
-      "start": 40.93,
-      "end": 41.09,
-      "confidence": 0.8137792,
-      "punctuated_word": "s"
-    },
-    {
-      "word": "model",
-      "start": 41.09,
-      "end": 41.489998,
-      "confidence": 0.81925744,
-      "punctuated_word": "model"
-    },
-    {
-      "word": "3",
-      "start": 41.489998,
-      "end": 41.989998,
-      "confidence": 0.88819516,
-      "punctuated_word": "3"
-    },
-    {
-      "word": "and",
-      "start": 42.245003,
-      "end": 42.485,
-      "confidence": 0.99868685,
-      "punctuated_word": "and"
-    },
-    {
-      "word": "the",
-      "start": 42.485,
-      "end": 42.645,
-      "confidence": 0.9993424,
-      "punctuated_word": "the"
-    },
-    {
-      "word": "upcoming",
-      "start": 42.645,
-      "end": 43.125,
-      "confidence": 0.99961334,
-      "punctuated_word": "upcoming"
-    },
-    {
-      "word": "cyber",
-      "start": 43.125,
-      "end": 43.525,
-      "confidence": 0.55221003,
-      "punctuated_word": "cyber"
-    },
-    {
-      "word": "truck",
-      "start": 43.525,
-      "end": 43.765,
-      "confidence": 0.81676245,
-      "punctuated_word": "truck,"
-    },
-    {
-      "word": "which",
-      "start": 43.765,
-      "end": 44.085,
-      "confidence": 0.9996245,
-      "punctuated_word": "which"
-    },
-    {
-      "word": "are",
-      "start": 44.085,
-      "end": 44.245003,
-      "confidence": 0.9997392,
-      "punctuated_word": "are"
-    },
-    {
-      "word": "changing",
-      "start": 44.245003,
-      "end": 44.645,
-      "confidence": 0.9998307,
-      "punctuated_word": "changing"
-    },
-    {
-      "word": "the",
-      "start": 44.645,
-      "end": 44.805,
-      "confidence": 0.99928683,
-      "punctuated_word": "the"
-    },
-    {
-      "word": "automotive",
-      "start": 44.805,
-      "end": 45.305,
-      "confidence": 0.9954413,
-      "punctuated_word": "automotive"
-    },
-    {
-      "word": "industry",
-      "start": 45.605,
-      "end": 46.105,
-      "confidence": 0.9819243,
-      "punctuated_word": "industry."
-    },
-    {
-      "word": "through",
-      "start": 46.645,
-      "end": 46.885002,
-      "confidence": 0.99862206,
-      "punctuated_word": "Through"
-    },
-    {
       "word": "his",
-      "start": 46.885002,
-      "end": 47.045002,
-      "confidence": 0.99940753,
+      "start": 5.7599998,
+      "end": 6,
+      "confidence": 0.9998355,
       "punctuated_word": "his"
     },
     {
-      "word": "ambitious",
-      "start": 47.045002,
-      "end": 47.545002,
-      "confidence": 0.99962926,
-      "punctuated_word": "ambitious"
-    },
-    {
-      "word": "projects",
-      "start": 47.685,
-      "end": 48.085,
-      "confidence": 0.9963232,
-      "punctuated_word": "projects"
-    },
-    {
-      "word": "and",
-      "start": 48.085,
-      "end": 48.325,
-      "confidence": 0.9975152,
-      "punctuated_word": "and"
-    },
-    {
-      "word": "companies",
-      "start": 48.325,
-      "end": 48.825,
-      "confidence": 0.99501634,
-      "punctuated_word": "companies,"
-    },
-    {
-      "word": "elon",
-      "start": 49.125,
-      "end": 49.525,
-      "confidence": 0.9975672,
-      "punctuated_word": "Elon"
-    },
-    {
-      "word": "musk",
-      "start": 49.525,
-      "end": 49.765,
-      "confidence": 0.99237263,
-      "punctuated_word": "Musk"
-    },
-    {
-      "word": "is",
-      "start": 49.765,
-      "end": 50.005,
-      "confidence": 0.9973367,
-      "punctuated_word": "is"
-    },
-    {
-      "word": "shaping",
-      "start": 50.005,
-      "end": 50.325,
-      "confidence": 0.99960357,
-      "punctuated_word": "shaping"
-    },
-    {
-      "word": "the",
-      "start": 50.325,
-      "end": 50.405,
-      "confidence": 0.9993113,
-      "punctuated_word": "the"
-    },
-    {
-      "word": "future",
-      "start": 50.405,
-      "end": 50.805,
-      "confidence": 0.9996214,
-      "punctuated_word": "future"
-    },
-    {
-      "word": "of",
-      "start": 50.805,
-      "end": 50.965,
-      "confidence": 0.99988234,
-      "punctuated_word": "of"
-    },
-    {
-      "word": "humanity",
-      "start": 50.965,
-      "end": 51.465,
-      "confidence": 0.9981621,
-      "punctuated_word": "humanity"
+      "word": "mark",
+      "start": 6,
+      "end": 6.16,
+      "confidence": 0.9990397,
+      "punctuated_word": "mark"
     },
     {
       "word": "with",
-      "start": 51.525,
-      "end": 51.989,
-      "confidence": 0.99829835,
+      "start": 6.16,
+      "end": 6.48,
+      "confidence": 0.9995301,
       "punctuated_word": "with"
     },
     {
+      "word": "incredible",
+      "start": 6.48,
+      "end": 6.98,
+      "confidence": 0.99928385,
+      "punctuated_word": "incredible"
+    },
+    {
+      "word": "speed",
+      "start": 7.12,
+      "end": 7.62,
+      "confidence": 0.9979451,
+      "punctuated_word": "speed,"
+    },
+    {
+      "word": "skill",
+      "start": 7.8399997,
+      "end": 8.16,
+      "confidence": 0.9831364,
+      "punctuated_word": "skill,"
+    },
+    {
+      "word": "and",
+      "start": 8.16,
+      "end": 8.4,
+      "confidence": 0.99970835,
+      "punctuated_word": "and"
+    },
+    {
+      "word": "determination",
+      "start": 8.4,
+      "end": 8.9,
+      "confidence": 0.9994709,
+      "punctuated_word": "determination."
+    },
+    {
+      "word": "born",
+      "start": 9.679999,
+      "end": 9.92,
+      "confidence": 0.9951434,
+      "punctuated_word": "Born"
+    },
+    {
+      "word": "in",
+      "start": 9.92,
+      "end": 10.16,
+      "confidence": 0.9986914,
+      "punctuated_word": "in"
+    },
+    {
+      "word": "madera",
+      "start": 10.16,
+      "end": 10.639999,
+      "confidence": 0.92339975,
+      "punctuated_word": "Madera,"
+    },
+    {
+      "word": "portugal",
+      "start": 10.639999,
+      "end": 11.139999,
+      "confidence": 0.9014566,
+      "punctuated_word": "Portugal,"
+    },
+    {
+      "word": "ronaldo",
+      "start": 11.2,
+      "end": 11.7,
+      "confidence": 0.9921491,
+      "punctuated_word": "Ronaldo"
+    },
+    {
+      "word": "grew",
+      "start": 11.759999,
+      "end": 12,
+      "confidence": 0.99418724,
+      "punctuated_word": "grew"
+    },
+    {
+      "word": "up",
+      "start": 12,
+      "end": 12.16,
+      "confidence": 0.999569,
+      "punctuated_word": "up"
+    },
+    {
+      "word": "with",
+      "start": 12.16,
+      "end": 12.465,
+      "confidence": 0.7680994,
+      "punctuated_word": "with."
+    },
+    {
       "word": "a",
-      "start": 52.069,
-      "end": 52.309,
-      "confidence": 0.998637,
-      "punctuated_word": "a"
+      "start": 12.545,
+      "end": 12.785,
+      "confidence": 0.9980305,
+      "punctuated_word": "A"
     },
     {
-      "word": "focus",
-      "start": 52.309,
-      "end": 52.468998,
-      "confidence": 0.9994343,
-      "punctuated_word": "focus"
+      "word": "passion",
+      "start": 12.785,
+      "end": 12.945,
+      "confidence": 0.999411,
+      "punctuated_word": "passion"
     },
     {
-      "word": "on",
-      "start": 52.468998,
-      "end": 52.869,
-      "confidence": 0.99978465,
-      "punctuated_word": "on"
+      "word": "for",
+      "start": 12.945,
+      "end": 13.345,
+      "confidence": 0.9993174,
+      "punctuated_word": "for"
     },
     {
-      "word": "renewable",
-      "start": 52.869,
-      "end": 53.268997,
-      "confidence": 0.9978898,
-      "punctuated_word": "renewable"
-    },
-    {
-      "word": "and",
-      "start": 53.268997,
-      "end": 53.748997,
-      "confidence": 0.9898178,
-      "punctuated_word": "and"
-    },
-    {
-      "word": "advanced",
-      "start": 53.748997,
-      "end": 54.229,
-      "confidence": 0.94627,
-      "punctuated_word": "advanced"
-    },
-    {
-      "word": "transportation",
-      "start": 54.229,
-      "end": 54.729,
-      "confidence": 0.9976519,
-      "punctuated_word": "transportation"
+      "word": "soccer",
+      "start": 13.345,
+      "end": 13.745,
+      "confidence": 0.9993864,
+      "punctuated_word": "soccer"
     },
     {
       "word": "and",
-      "start": 55.428997,
-      "end": 55.829,
-      "confidence": 0.9672405,
+      "start": 13.745,
+      "end": 13.985001,
+      "confidence": 0.8919721,
       "punctuated_word": "and"
     },
     {
-      "word": "interconnected",
-      "start": 55.829,
-      "end": 56.329,
-      "confidence": 0.99719125,
-      "punctuated_word": "interconnected"
+      "word": "his",
+      "start": 13.985001,
+      "end": 14.145,
+      "confidence": 0.9991912,
+      "punctuated_word": "his"
     },
     {
-      "word": "technologies",
-      "start": 56.628998,
-      "end": 57.128998,
-      "confidence": 0.828248,
-      "punctuated_word": "technologies,"
-    },
-    {
-      "word": "inspiring",
-      "start": 57.588997,
-      "end": 58.088997,
-      "confidence": 0.9991611,
-      "punctuated_word": "inspiring"
-    },
-    {
-      "word": "new",
-      "start": 58.149,
-      "end": 58.389,
-      "confidence": 0.9995777,
-      "punctuated_word": "new"
-    },
-    {
-      "word": "generations",
-      "start": 58.389,
-      "end": 58.889,
-      "confidence": 0.9959156,
-      "punctuated_word": "generations"
-    },
-    {
-      "word": "to",
-      "start": 59.029,
-      "end": 59.189,
-      "confidence": 0.99918085,
-      "punctuated_word": "to"
-    },
-    {
-      "word": "think",
-      "start": 59.189,
-      "end": 59.509,
-      "confidence": 0.99977,
-      "punctuated_word": "think"
-    },
-    {
-      "word": "big",
-      "start": 59.509,
-      "end": 59.908997,
-      "confidence": 0.9987117,
-      "punctuated_word": "big,"
-    },
-    {
-      "word": "innovate",
-      "start": 59.908997,
-      "end": 60.408997,
-      "confidence": 0.995419,
-      "punctuated_word": "innovate,"
-    },
-    {
-      "word": "and",
-      "start": 60.788998,
-      "end": 60.948997,
-      "confidence": 0.99954104,
-      "punctuated_word": "and"
+      "word": "hard",
+      "start": 14.145,
+      "end": 14.385,
+      "confidence": 0.9994838,
+      "punctuated_word": "hard"
     },
     {
       "word": "work",
-      "start": 60.948997,
-      "end": 61.268997,
-      "confidence": 0.99957794,
+      "start": 14.385,
+      "end": 14.545,
+      "confidence": 0.9986355,
       "punctuated_word": "work"
     },
     {
-      "word": "towards",
-      "start": 61.268997,
-      "end": 61.768997,
-      "confidence": 0.9989844,
-      "punctuated_word": "towards"
+      "word": "and",
+      "start": 14.545,
+      "end": 14.785,
+      "confidence": 0.9801307,
+      "punctuated_word": "and"
+    },
+    {
+      "word": "dedication",
+      "start": 14.785,
+      "end": 15.285,
+      "confidence": 0.9999238,
+      "punctuated_word": "dedication"
+    },
+    {
+      "word": "took",
+      "start": 15.345,
+      "end": 15.505,
+      "confidence": 0.9988323,
+      "punctuated_word": "took"
+    },
+    {
+      "word": "him",
+      "start": 15.505,
+      "end": 15.745,
+      "confidence": 0.9995958,
+      "punctuated_word": "him"
+    },
+    {
+      "word": "from",
+      "start": 15.745,
+      "end": 15.985001,
+      "confidence": 0.9982962,
+      "punctuated_word": "from"
+    },
+    {
+      "word": "playing",
+      "start": 15.985001,
+      "end": 16.225,
+      "confidence": 0.9992071,
+      "punctuated_word": "playing"
+    },
+    {
+      "word": "with",
+      "start": 16.225,
+      "end": 16.465,
+      "confidence": 0.9973954,
+      "punctuated_word": "with"
+    },
+    {
+      "word": "his",
+      "start": 16.465,
+      "end": 16.625,
+      "confidence": 0.9976453,
+      "punctuated_word": "his"
+    },
+    {
+      "word": "friends",
+      "start": 16.625,
+      "end": 16.945,
+      "confidence": 0.99953246,
+      "punctuated_word": "friends"
+    },
+    {
+      "word": "in",
+      "start": 16.945,
+      "end": 17.105,
+      "confidence": 0.9891761,
+      "punctuated_word": "in"
+    },
+    {
+      "word": "the",
+      "start": 17.105,
+      "end": 17.185,
+      "confidence": 0.99946266,
+      "punctuated_word": "the"
+    },
+    {
+      "word": "streets",
+      "start": 17.185,
+      "end": 17.585,
+      "confidence": 0.99872154,
+      "punctuated_word": "streets"
+    },
+    {
+      "word": "to",
+      "start": 17.585,
+      "end": 17.744999,
+      "confidence": 0.9969363,
+      "punctuated_word": "to"
+    },
+    {
+      "word": "becoming",
+      "start": 17.744999,
+      "end": 18.225,
+      "confidence": 0.98722744,
+      "punctuated_word": "becoming"
     },
     {
       "word": "a",
-      "start": 61.989,
-      "end": 62.149,
-      "confidence": 0.999154,
+      "start": 18.225,
+      "end": 18.465,
+      "confidence": 0.9964833,
       "punctuated_word": "a"
     },
     {
-      "word": "better",
-      "start": 62.149,
-      "end": 62.468998,
-      "confidence": 0.9996045,
-      "punctuated_word": "better"
+      "word": "professional",
+      "start": 18.465,
+      "end": 18.945,
+      "confidence": 0.9996269,
+      "punctuated_word": "professional"
     },
     {
-      "word": "tomorrow",
-      "start": 62.468998,
-      "end": 62.968998,
-      "confidence": 0.9981034,
-      "punctuated_word": "tomorrow."
+      "word": "player",
+      "start": 18.945,
+      "end": 19.345,
+      "confidence": 0.99898857,
+      "punctuated_word": "player"
+    },
+    {
+      "word": "at",
+      "start": 19.345,
+      "end": 19.505001,
+      "confidence": 0.99888533,
+      "punctuated_word": "at"
+    },
+    {
+      "word": "a",
+      "start": 19.505001,
+      "end": 19.585,
+      "confidence": 0.9972771,
+      "punctuated_word": "a"
+    },
+    {
+      "word": "young",
+      "start": 19.585,
+      "end": 19.825,
+      "confidence": 0.9999069,
+      "punctuated_word": "young"
+    },
+    {
+      "word": "age",
+      "start": 19.825,
+      "end": 20.325,
+      "confidence": 0.99913055,
+      "punctuated_word": "age"
+    },
+    {
+      "word": "with",
+      "start": 20.705,
+      "end": 20.945,
+      "confidence": 0.9665315,
+      "punctuated_word": "with"
+    },
+    {
+      "word": "his",
+      "start": 20.945,
+      "end": 21.185001,
+      "confidence": 0.99968266,
+      "punctuated_word": "his"
+    },
+    {
+      "word": "lightning",
+      "start": 21.185001,
+      "end": 21.665,
+      "confidence": 0.98810077,
+      "punctuated_word": "lightning"
+    },
+    {
+      "word": "fast",
+      "start": 21.665,
+      "end": 21.985,
+      "confidence": 0.9970716,
+      "punctuated_word": "fast"
+    },
+    {
+      "word": "speed",
+      "start": 21.985,
+      "end": 22.485,
+      "confidence": 0.9948925,
+      "punctuated_word": "speed,"
+    },
+    {
+      "word": "exceptional",
+      "start": 22.785,
+      "end": 23.285,
+      "confidence": 0.9999081,
+      "punctuated_word": "exceptional"
+    },
+    {
+      "word": "ball",
+      "start": 23.345001,
+      "end": 23.585,
+      "confidence": 0.99874264,
+      "punctuated_word": "ball"
+    },
+    {
+      "word": "control",
+      "start": 23.585,
+      "end": 24.085,
+      "confidence": 0.99289274,
+      "punctuated_word": "control,"
+    },
+    {
+      "word": "and",
+      "start": 24.145,
+      "end": 24.385,
+      "confidence": 0.9997441,
+      "punctuated_word": "and"
+    },
+    {
+      "word": "powerful",
+      "start": 24.385,
+      "end": 24.865,
+      "confidence": 0.9992925,
+      "punctuated_word": "powerful"
+    },
+    {
+      "word": "shooting",
+      "start": 24.865,
+      "end": 25.105,
+      "confidence": 0.9998857,
+      "punctuated_word": "shooting"
+    },
+    {
+      "word": "ability",
+      "start": 25.105,
+      "end": 25.59,
+      "confidence": 0.97519505,
+      "punctuated_word": "ability."
+    },
+    {
+      "word": "ronaldo",
+      "start": 25.83,
+      "end": 26.31,
+      "confidence": 0.9893601,
+      "punctuated_word": "Ronaldo"
+    },
+    {
+      "word": "has",
+      "start": 26.31,
+      "end": 26.47,
+      "confidence": 0.9993723,
+      "punctuated_word": "has"
+    },
+    {
+      "word": "won",
+      "start": 26.47,
+      "end": 26.710001,
+      "confidence": 0.9980356,
+      "punctuated_word": "won"
+    },
+    {
+      "word": "numerous",
+      "start": 26.710001,
+      "end": 27.210001,
+      "confidence": 0.99990714,
+      "punctuated_word": "numerous"
+    },
+    {
+      "word": "awards",
+      "start": 27.27,
+      "end": 27.67,
+      "confidence": 0.99792093,
+      "punctuated_word": "awards"
+    },
+    {
+      "word": "and",
+      "start": 27.67,
+      "end": 27.83,
+      "confidence": 0.99826753,
+      "punctuated_word": "and"
+    },
+    {
+      "word": "broken",
+      "start": 27.83,
+      "end": 28.23,
+      "confidence": 0.9993318,
+      "punctuated_word": "broken"
+    },
+    {
+      "word": "records",
+      "start": 28.23,
+      "end": 28.73,
+      "confidence": 0.7847614,
+      "punctuated_word": "records,"
+    },
+    {
+      "word": "inspiring",
+      "start": 29.19,
+      "end": 29.69,
+      "confidence": 0.9993068,
+      "punctuated_word": "inspiring"
+    },
+    {
+      "word": "millions",
+      "start": 29.75,
+      "end": 30.23,
+      "confidence": 0.90093523,
+      "punctuated_word": "millions"
+    },
+    {
+      "word": "of",
+      "start": 30.23,
+      "end": 30.470001,
+      "confidence": 0.99982613,
+      "punctuated_word": "of"
+    },
+    {
+      "word": "fans",
+      "start": 30.470001,
+      "end": 30.869999,
+      "confidence": 0.9997298,
+      "punctuated_word": "fans"
+    },
+    {
+      "word": "around",
+      "start": 30.869999,
+      "end": 31.11,
+      "confidence": 0.9996575,
+      "punctuated_word": "around"
+    },
+    {
+      "word": "the",
+      "start": 31.11,
+      "end": 31.27,
+      "confidence": 0.999673,
+      "punctuated_word": "the"
+    },
+    {
+      "word": "world",
+      "start": 31.27,
+      "end": 31.59,
+      "confidence": 0.9998299,
+      "punctuated_word": "world"
+    },
+    {
+      "word": "with",
+      "start": 31.59,
+      "end": 31.75,
+      "confidence": 0.99836487,
+      "punctuated_word": "with"
+    },
+    {
+      "word": "his",
+      "start": 31.75,
+      "end": 32.07,
+      "confidence": 0.99916565,
+      "punctuated_word": "his"
+    },
+    {
+      "word": "incredible",
+      "start": 32.07,
+      "end": 32.57,
+      "confidence": 0.999892,
+      "punctuated_word": "incredible"
+    },
+    {
+      "word": "talent",
+      "start": 32.63,
+      "end": 33.03,
+      "confidence": 0.99982256,
+      "punctuated_word": "talent"
+    },
+    {
+      "word": "and",
+      "start": 33.03,
+      "end": 33.27,
+      "confidence": 0.99704236,
+      "punctuated_word": "and"
+    },
+    {
+      "word": "perseverance",
+      "start": 33.27,
+      "end": 33.77,
+      "confidence": 0.9932788,
+      "punctuated_word": "perseverance."
+    },
+    {
+      "word": "but",
+      "start": 34.79,
+      "end": 35.03,
+      "confidence": 0.99860305,
+      "punctuated_word": "But"
+    },
+    {
+      "word": "ronaldo's",
+      "start": 35.03,
+      "end": 35.53,
+      "confidence": 0.9807712,
+      "punctuated_word": "Ronaldo's"
+    },
+    {
+      "word": "impact",
+      "start": 35.67,
+      "end": 36.07,
+      "confidence": 0.916004,
+      "punctuated_word": "impact"
+    },
+    {
+      "word": "goes",
+      "start": 36.07,
+      "end": 36.39,
+      "confidence": 0.9951107,
+      "punctuated_word": "goes"
+    },
+    {
+      "word": "beyond",
+      "start": 36.39,
+      "end": 36.79,
+      "confidence": 0.99991906,
+      "punctuated_word": "beyond"
+    },
+    {
+      "word": "the",
+      "start": 36.79,
+      "end": 36.95,
+      "confidence": 0.999703,
+      "punctuated_word": "the"
+    },
+    {
+      "word": "soccer",
+      "start": 36.95,
+      "end": 37.35,
+      "confidence": 0.99962497,
+      "punctuated_word": "soccer"
+    },
+    {
+      "word": "field",
+      "start": 37.35,
+      "end": 37.75,
+      "confidence": 0.9999069,
+      "punctuated_word": "field"
+    },
+    {
+      "word": "as",
+      "start": 37.75,
+      "end": 37.91,
+      "confidence": 0.98550355,
+      "punctuated_word": "as"
+    },
+    {
+      "word": "he",
+      "start": 37.91,
+      "end": 38.07,
+      "confidence": 0.9998185,
+      "punctuated_word": "he"
+    },
+    {
+      "word": "uses",
+      "start": 38.07,
+      "end": 38.47,
+      "confidence": 0.9997675,
+      "punctuated_word": "uses"
+    },
+    {
+      "word": "his",
+      "start": 38.47,
+      "end": 38.71,
+      "confidence": 0.99937457,
+      "punctuated_word": "his"
+    },
+    {
+      "word": "platform",
+      "start": 38.71,
+      "end": 39.21,
+      "confidence": 0.9996512,
+      "punctuated_word": "platform"
+    },
+    {
+      "word": "to",
+      "start": 39.27,
+      "end": 39.510002,
+      "confidence": 0.9997811,
+      "punctuated_word": "to"
+    },
+    {
+      "word": "make",
+      "start": 39.510002,
+      "end": 40.010002,
+      "confidence": 0.999826,
+      "punctuated_word": "make"
+    },
+    {
+      "word": "a",
+      "start": 40.176,
+      "end": 40.336,
+      "confidence": 0.9997404,
+      "punctuated_word": "a"
+    },
+    {
+      "word": "positive",
+      "start": 40.336,
+      "end": 40.736,
+      "confidence": 0.999925,
+      "punctuated_word": "positive"
+    },
+    {
+      "word": "difference",
+      "start": 40.736,
+      "end": 41.135998,
+      "confidence": 0.99987066,
+      "punctuated_word": "difference"
+    },
+    {
+      "word": "in",
+      "start": 41.135998,
+      "end": 41.216,
+      "confidence": 0.9998894,
+      "punctuated_word": "in"
+    },
+    {
+      "word": "the",
+      "start": 41.216,
+      "end": 41.376,
+      "confidence": 0.9999497,
+      "punctuated_word": "the"
+    },
+    {
+      "word": "world",
+      "start": 41.376,
+      "end": 41.856,
+      "confidence": 0.9130064,
+      "punctuated_word": "world,"
+    },
+    {
+      "word": "supporting",
+      "start": 41.856,
+      "end": 42.336,
+      "confidence": 0.9995091,
+      "punctuated_word": "supporting"
+    },
+    {
+      "word": "important",
+      "start": 42.336,
+      "end": 42.836,
+      "confidence": 0.9998264,
+      "punctuated_word": "important"
+    },
+    {
+      "word": "causes",
+      "start": 42.896,
+      "end": 43.396,
+      "confidence": 0.9273813,
+      "punctuated_word": "causes,"
+    },
+    {
+      "word": "and",
+      "start": 43.455997,
+      "end": 43.856,
+      "confidence": 0.9991258,
+      "punctuated_word": "and"
+    },
+    {
+      "word": "inspiring",
+      "start": 43.856,
+      "end": 44.356,
+      "confidence": 0.9993536,
+      "punctuated_word": "inspiring"
+    },
+    {
+      "word": "young",
+      "start": 44.496,
+      "end": 44.736,
+      "confidence": 0.99989235,
+      "punctuated_word": "young"
+    },
+    {
+      "word": "people",
+      "start": 44.736,
+      "end": 45.135998,
+      "confidence": 0.99992454,
+      "punctuated_word": "people"
+    },
+    {
+      "word": "to",
+      "start": 45.135998,
+      "end": 45.376,
+      "confidence": 0.99961996,
+      "punctuated_word": "to"
+    },
+    {
+      "word": "chase",
+      "start": 45.376,
+      "end": 45.696,
+      "confidence": 0.99955755,
+      "punctuated_word": "chase"
+    },
+    {
+      "word": "their",
+      "start": 45.696,
+      "end": 45.935997,
+      "confidence": 0.9998486,
+      "punctuated_word": "their"
+    },
+    {
+      "word": "dreams",
+      "start": 45.935997,
+      "end": 46.336,
+      "confidence": 0.99983954,
+      "punctuated_word": "dreams"
+    },
+    {
+      "word": "and",
+      "start": 46.336,
+      "end": 46.576,
+      "confidence": 0.95442146,
+      "punctuated_word": "and"
+    },
+    {
+      "word": "never",
+      "start": 46.576,
+      "end": 46.896,
+      "confidence": 0.9999652,
+      "punctuated_word": "never"
+    },
+    {
+      "word": "give",
+      "start": 46.896,
+      "end": 47.056,
+      "confidence": 0.99992776,
+      "punctuated_word": "give"
+    },
+    {
+      "word": "up",
+      "start": 47.056,
+      "end": 47.295998,
+      "confidence": 0.9999256,
+      "punctuated_word": "up"
+    },
+    {
+      "word": "on",
+      "start": 47.295998,
+      "end": 47.455997,
+      "confidence": 0.99952865,
+      "punctuated_word": "on"
+    },
+    {
+      "word": "their",
+      "start": 47.455997,
+      "end": 47.696,
+      "confidence": 0.99975866,
+      "punctuated_word": "their"
+    },
+    {
+      "word": "passions",
+      "start": 47.696,
+      "end": 48.196,
+      "confidence": 0.99789596,
+      "punctuated_word": "passions."
     }
   ],
   "lastModified": {
