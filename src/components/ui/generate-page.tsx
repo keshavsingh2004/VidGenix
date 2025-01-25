@@ -11,6 +11,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useToast } from "@/hooks/use-toast";
 import AnimatedLoadingWait from "./animated-loading-wait";
+import Image from 'next/image';
 
 interface FormData {
   title: string;
@@ -58,7 +59,6 @@ export function GeneratePage() {
   const [formData, setFormData] = useState<FormData>({ title: "" });
   const [responseData, setResponseData] = useState<ResponseData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [logs, setLogs] = useState<string[]>([]);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -68,17 +68,6 @@ export function GeneratePage() {
         setFormData(JSON.parse(savedFormData));
       }
     }
-  }, []);
-
-  useEffect(() => {
-    const savedLog = console.log;
-    console.log = (...args: any[]) => {
-      setLogs((prev) => [...prev, args.join(" ")]);
-      savedLog(...args);
-    };
-    return () => {
-      console.log = savedLog;
-    };
   }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -232,7 +221,13 @@ export function GeneratePage() {
                                 <p className="text-sm font-semibold text-gray-300">
                                   Scene {index + 1}: {scene.scene.replace(/^Scene \d+:\s*/, "")}
                                 </p>
-                                <img src={scene.path} alt={`Scene ${index + 1}`} className="rounded" />
+                                <Image 
+                                  src={scene.url}
+                                  alt={`Scene ${index + 1}`}
+                                  width={1920}
+                                  height={1080}
+                                  className="rounded"
+                                />
                               </CardContent>
                             </Card>
                           ))}

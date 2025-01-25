@@ -14,6 +14,15 @@ const nextConfig = {
       },
     ];
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'utfs.io',
+        pathname: '/f/**',
+      },
+    ],
+  },
 };
 
 module.exports = nextConfig;

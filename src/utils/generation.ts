@@ -1,4 +1,4 @@
-import { GenerationContext, GenerationMetadata, APIError, GenerationResult } from '@/types/types';
+import { GenerationContext, GenerationMetadata, GenerationResult } from '@/types/types';
 import path from 'path';
 import Groq from "groq-sdk";
 import fs from 'fs';
@@ -232,23 +232,6 @@ Requirements:
     console.error('❌ Script generation error:', error);
     throw error;
   }
-}
-
-interface Word {
-  text: string;
-  start: number;
-  end: number;
-}
-
-interface AssemblyAIUploadResponse {
-  id: string;
-  status: string;
-  audio_url: string;
-}
-
-// Type guard for AssemblyAI upload response
-function isUploadResponse(response: string | AssemblyAIUploadResponse): response is AssemblyAIUploadResponse {
-  return typeof response === 'object' && 'audio_url' in response;
 }
 
 export async function generateCaptions(
