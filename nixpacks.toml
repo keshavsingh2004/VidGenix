@@ -1,5 +1,35 @@
 [phases.setup]
-nixPkgs = ["...", "ffmpeg-full", "x264", "x265", "fdk_aac"]
+nixPkgs = [
+    "ffmpeg-full",
+    "x264",
+    "x265", 
+    "fdk_aac",
+    "chromium",
+    "glibc",
+    "glib",
+    "nss",
+    "nspr",
+    "atk",
+    "at-spi2-atk",
+    "libdrm",
+    "mesa",
+    "expat",
+    "cups",
+    "dbus",
+    "gtk3",
+    "pango",
+    "cairo",
+    "alsa-lib",
+    "xorg.libX11",
+    "xorg.libXcomposite",
+    "xorg.libXdamage",
+    "xorg.libXext",
+    "xorg.libXfixes",
+    "xorg.libXrandr",
+    "xorg.libxcb"
+]
 
-[phases.build]
-resourceLimits = { memory = "3500M", swap = "1G" }
+[phases.setup.env]
+PUPPETEER_SKIP_CHROMIUM_DOWNLOAD = "true"
+CHROME_BIN = "/nix/store/chromium-unwrapped/bin/chromium"
+PUPPETEER_EXECUTABLE_PATH = "/nix/store/chromium-unwrapped/bin/chromium"
